@@ -1,13 +1,16 @@
 import { createBookmarkStore } from "../features/bookmarks/store";
+import { createSelectedStore } from "../features/selected-stock/store";
 
 const createFacade = () => {
   const bookmarks = createBookmarkStore();
+  const selectedStock = createSelectedStore();
 
   return {
     getBookmarks: bookmarks.bookmarks$,
     addBookmark: bookmarks.addBookmark,
     removeBookmark: bookmarks.removeBookmark,
-    // useSelectedRecord: () => {},
+    getSelectedStock: selectedStock.selectedStock$,
+    selectStock: selectedStock.selectStock,
     // useFilter: () => {},
     // useSearch: () => {},
     // useSort: () => {},
