@@ -1,13 +1,13 @@
 import { BehaviorSubject } from "rxjs";
-import type { BookmarkSymbol } from "../../shared/types/bookmarks";
+import type { StockSymbol } from "../../shared/types/stock";
 
 const STORAGE_KEY = "bookmarks";
 
-const updateStorage = (key: string, value: Set<string>) => {
+const updateStorage = (key: string, value: Set<StockSymbol>) => {
   localStorage.setItem(key, JSON.stringify([...value]));
 };
 
-const loadBookmarks = (): Set<BookmarkSymbol> => {
+const loadBookmarks = (): Set<StockSymbol> => {
   const value = localStorage.getItem(STORAGE_KEY);
 
   if (!value) {
@@ -26,7 +26,7 @@ export const createBookmarkStore = () => {
   // holds the current bookmark state and emits changes
   const bookmarks$ = new BehaviorSubject(loadBookmarks());
 
-  const addBookmark = (symbol: BookmarkSymbol) => {
+  const addBookmark = (symbol: StockSymbol) => {
     // create a new Set based on current state
     const next = new Set(bookmarks$.value);
 
@@ -40,7 +40,7 @@ export const createBookmarkStore = () => {
     updateStorage(STORAGE_KEY, next);
   };
 
-  const removeBookmark = (symbol: BookmarkSymbol) => {
+  const removeBookmark = (symbol: StockSymbol) => {
     const next = new Set(bookmarks$.value);
 
     // remove passed symbol from observable

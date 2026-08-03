@@ -1,18 +1,18 @@
 import { Box, Typography } from "@mui/material";
-import type { Company } from "../types/company";
+import type { Stock, StockSymbol } from "../types/stock";
 import { Bookmark } from "../../features/bookmarks/bookmark";
 
-type StockRecord = {
-  company: Company;
-  isBookmarked: undefined | boolean;
-  onToggleBookmark: (symbol: string) => void;
+type StockListRecordProps = {
+  stock: Stock;
+  isBookmarked: boolean;
+  onToggleBookmark: (symbol: StockSymbol) => void;
 };
 
 export const StockListRecord = ({
-  company,
+  stock,
   isBookmarked,
   onToggleBookmark,
-}: StockRecord) => {
+}: StockListRecordProps) => {
   return (
     <Box
       sx={{
@@ -42,16 +42,16 @@ export const StockListRecord = ({
             "&:hover": { color: "#0094F7" },
           }}
         >
-          {company.name}
+          {stock.name}
         </Typography>
         <Typography sx={{ fontSize: "12px", color: "#C5C5C5" }}>
-          [{company.symbol}]
+          [{stock.symbol}]
         </Typography>
       </Box>
       <Bookmark
         isBookmarked={isBookmarked}
-        symbol={company.symbol}
-        handleBookmark={onToggleBookmark}
+        symbol={stock.symbol}
+        onToggleBookmark={onToggleBookmark}
       />
     </Box>
   );

@@ -2,17 +2,16 @@ import { Box } from "@mui/material";
 import { useState } from "react";
 import companiesJSON from "./../../assets/data/sp500.json";
 import { StockListRecord } from "./stock-list-record";
-import type { Company } from "../types/company";
+import type { Stock } from "../types/stock";
 import { useObservable } from "../../handlers/use-observable";
 import { facade } from "../../handlers/facade";
 
 export const StockList = () => {
-  const [data, setData] = useState<Company[]>(companiesJSON.companies);
+  const [data, setData] = useState<Stock[]>(companiesJSON.companies);
 
-  const bookmarks = useObservable(
-    facade.getBookmarks,
-    facade.getBookmarks.getValue(),
-  );
+  const bookmarks =
+    useObservable(facade.getBookmarks, facade.getBookmarks.getValue()) ??
+    new Set();
 
   return (
     <Box
@@ -24,13 +23,13 @@ export const StockList = () => {
       }}
     >
       <Box sx={{ height: "100%", overflow: "auto", p: 1 }}>
-        {data.map((company) => (
+        {data.map((stock) => (
           <StockListRecord
-            key={company.symbol}
-            company={company}
-            isBookmarked={bookmarks?.has(company.symbol)}
+            key={stock.symbol}
+            stock={stock}
+            isBookmarked={bookmarks.has(stock.symbol)}
             onToggleBookmark={(symbol) =>
-              bookmarks?.has(symbol)
+              bookmarks.has(symbol)
                 ? facade.removeBookmark(symbol)
                 : facade.addBookmark(symbol)
             }
