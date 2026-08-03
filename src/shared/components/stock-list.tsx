@@ -13,9 +13,14 @@ export const StockList = () => {
 
   const allStocks = companiesJSON.companies;
 
-  const data = isBookmarkedOnly
-    ? allStocks.filter((stock) => bookmarks.has(stock.symbol))
-    : allStocks;
+  let data = allStocks;
+
+  if (isBookmarkedOnly) {
+    data = allStocks.filter((stock) => bookmarks.has(stock.symbol));
+  }
+  // searchQuery
+  // filter
+  // sort
 
   return (
     <Box
