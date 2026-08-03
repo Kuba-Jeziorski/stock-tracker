@@ -8,6 +8,7 @@ export const StockContainer = () => {
       sx={{
         display: "flex",
         flex: 1,
+        minHeight: 0,
         justifyContent: "space-between",
         gap: 8,
       }}

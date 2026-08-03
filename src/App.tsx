@@ -7,7 +7,12 @@ function App() {
   return (
     <Container
       maxWidth={false}
-      sx={{ paddingTop: 4, paddingBottom: 4, height: "100vh" }}
+      sx={{
+        paddingTop: 4,
+        paddingBottom: 4,
+        height: "100vh",
+        maxHeight: "100vh",
+      }}
     >
       <Stack direction="column" spacing={4} sx={{ height: "100%" }}>
         <Menu />

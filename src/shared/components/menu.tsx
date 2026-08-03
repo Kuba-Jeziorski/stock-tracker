@@ -1,4 +1,6 @@
 import { Box, TextField, Link } from "@mui/material";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import SortIcon from "@mui/icons-material/Sort";
 
 export const Menu = () => {
   return (
@@ -7,7 +9,6 @@ export const Menu = () => {
         p: 4,
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
         gap: 8,
         border: 1,
       }}
@@ -19,8 +20,10 @@ export const Menu = () => {
         id="search-bar"
         label="Search stock"
         variant="outlined"
-        sx={{ flex: 1, maxWidth: 1 / 2 }}
+        sx={{ flex: 1, maxWidth: 1 / 2, ml: "auto" }}
       ></TextField>
+      <FilterAltIcon fontSize="medium" sx={{ cursor: "pointer" }} />
+      <SortIcon fontSize="medium" sx={{ cursor: "pointer" }} />
     </Box>
   );
 };

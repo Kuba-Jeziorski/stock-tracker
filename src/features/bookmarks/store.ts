@@ -1,0 +1,60 @@
+import { BehaviorSubject } from "rxjs";
+import type { BookmarkSymbol } from "../../shared/types/bookmarks";
+
+const STORAGE_KEY = "bookmarks";
+
+const updateStorage = (key: string, value: Set<string>) => {
+  localStorage.setItem(key, JSON.stringify([...value]));
+};
+
+const loadBookmarks = (): Set<BookmarkSymbol> => {
+  const value = localStorage.getItem(STORAGE_KEY);
+
+  if (!value) {
+    return new Set();
+  }
+
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? new Set(parsed) : new Set();
+  } catch {
+    return new Set();
+  }
+};
+
+export const createBookmarkStore = () => {
+  // holds the current bookmark state and emits changes
+  const bookmarks$ = new BehaviorSubject(loadBookmarks());
+
+  const addBookmark = (symbol: BookmarkSymbol) => {
+    // create a new Set based on current state
+    const next = new Set(bookmarks$.value);
+
+    // add a new bookmark
+    next.add(symbol);
+
+    // emit a new state to subscribers
+    bookmarks$.next(next);
+
+    // persist a new state
+    updateStorage(STORAGE_KEY, next);
+  };
+
+  const removeBookmark = (symbol: BookmarkSymbol) => {
+    const next = new Set(bookmarks$.value);
+
+    // remove passed symbol from observable
+    next.delete(symbol);
+
+    // notify
+    bookmarks$.next(next);
+    // update localStorage
+    updateStorage(STORAGE_KEY, next);
+  };
+
+  return {
+    bookmarks$,
+    addBookmark,
+    removeBookmark,
+  };
+};
