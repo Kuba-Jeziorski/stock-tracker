@@ -58,3 +58,23 @@ export const createBookmarkStore = () => {
     removeBookmark,
   };
 };
+
+export const createBookmarkedOnly = () => {
+  const showBookmarkedOnly$ = new BehaviorSubject(false);
+
+  // menu icon
+  const toggleShowBookmarkedOnly = () => {
+    showBookmarkedOnly$.next(!showBookmarkedOnly$.value);
+  };
+
+  // filters?
+  const setShowBookmarkedOnly = (value: boolean) => {
+    showBookmarkedOnly$.next(value);
+  };
+
+  return {
+    showBookmarkedOnly$,
+    toggleShowBookmarkedOnly,
+    setShowBookmarkedOnly,
+  };
+};
