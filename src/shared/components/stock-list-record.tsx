@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import type { Stock, StockSymbol } from "../types/stock";
 import { Bookmark } from "../../features/bookmarks/bookmark";
 import { facade } from "../../handlers/facade";
+import { setTabTitle } from "../../utils/set-tab-title";
 
 type StockListRecordProps = {
   stock: Stock;
@@ -15,6 +16,11 @@ export const StockListRecord = ({
   onToggleBookmark,
 }: StockListRecordProps) => {
   const { selectStock } = facade;
+
+  const handleClick = (symbol: StockSymbol) => {
+    setTabTitle(symbol);
+    selectStock(symbol);
+  };
 
   return (
     <Box
@@ -44,7 +50,7 @@ export const StockListRecord = ({
             transitionDuration: "300ms",
             "&:hover": { color: "#0094F7" },
           }}
-          onClick={() => selectStock(stock.symbol)}
+          onClick={() => handleClick(stock.symbol)}
         >
           {stock.name}
         </Typography>
