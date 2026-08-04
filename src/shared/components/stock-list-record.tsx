@@ -17,9 +17,9 @@ export const StockListRecord = ({
 }: StockListRecordProps) => {
   const { selectStock } = facade;
 
-  const handleClick = (symbol: StockSymbol) => {
-    setTabTitle(symbol);
-    selectStock(symbol);
+  const handleClick = (stock: Stock) => {
+    setTabTitle(stock.name);
+    selectStock(stock.symbol);
   };
 
   return (
@@ -50,7 +50,7 @@ export const StockListRecord = ({
             transitionDuration: "300ms",
             "&:hover": { color: "#0094F7" },
           }}
-          onClick={() => handleClick(stock.symbol)}
+          onClick={() => handleClick(stock)}
         >
           {stock.name}
         </Typography>

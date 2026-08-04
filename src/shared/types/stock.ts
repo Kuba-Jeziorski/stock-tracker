@@ -4,3 +4,5 @@ export type Stock = {
 };
 
 export type StockSymbol = Stock["symbol"];
+
+export type StockName = Stock["name"];

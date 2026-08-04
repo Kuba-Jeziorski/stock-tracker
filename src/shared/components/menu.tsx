@@ -1,21 +1,33 @@
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 
 import { Box, TextField, Link } from "@mui/material";
-
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SortIcon from "@mui/icons-material/Sort";
+
 import { facade } from "../../handlers/facade";
+import { useObservable } from "../../handlers/use-observable";
 
 export const Menu = () => {
-  const { setBookmarkedOnly } = facade;
-
   const [isBookmarkActive, setIsBookmarkActive] = useState(false);
+
+  const { setBookmarkedOnly, setSearchedString } = facade;
+
+  const searchedValue =
+    useObservable(
+      facade.getSearchedStringRaw,
+      facade.getSearchedStringRaw.getValue(),
+    ) ?? "";
 
   const handleIsBookmarkActive = () => {
     const next = !isBookmarkActive;
     setIsBookmarkActive(() => next);
     setBookmarkedOnly(next);
+  };
+
+  const handleSearchQuery = (e: ChangeEvent<HTMLInputElement>) => {
+    const next = e.target.value;
+    setSearchedString(next);
   };
 
   return (
@@ -35,7 +47,9 @@ export const Menu = () => {
         id="search-bar"
         label="Search stock"
         variant="outlined"
+        value={searchedValue}
         sx={{ flex: 1, maxWidth: 1 / 2, ml: "auto" }}
+        onChange={handleSearchQuery}
       ></TextField>
       <FilterAltIcon fontSize="medium" sx={{ cursor: "pointer" }} />
       <SortIcon fontSize="medium" sx={{ cursor: "pointer" }} />

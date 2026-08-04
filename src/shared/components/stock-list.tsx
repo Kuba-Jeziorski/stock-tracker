@@ -9,7 +9,13 @@ export const StockList = () => {
     useObservable(facade.getBookmarks, facade.getBookmarks.getValue()) ??
     new Set();
 
-  const isBookmarkedOnly = useObservable(facade.getBookmarkedOnly) ?? false;
+  const isBookmarkedOnly =
+    useObservable(
+      facade.getBookmarkedOnly,
+      facade.getBookmarkedOnly.getValue(),
+    ) ?? false;
+
+  const searchedString = useObservable(facade.getSearchedString) ?? "";
 
   const allStocks = companiesJSON.companies;
 
@@ -18,7 +24,16 @@ export const StockList = () => {
   if (isBookmarkedOnly) {
     data = allStocks.filter((stock) => bookmarks.has(stock.symbol));
   }
-  // searchQuery
+
+  if (searchedString.length) {
+    const query = searchedString.toLowerCase();
+
+    data = data.filter(
+      ({ name, symbol }) =>
+        name.toLowerCase().startsWith(query) ||
+        symbol.toLowerCase().startsWith(query),
+    );
+  }
   // filter
   // sort
 
