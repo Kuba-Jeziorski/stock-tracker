@@ -41,7 +41,7 @@ export const Menu = () => {
       }}
     >
       <Link href="#" sx={{ maxWidth: 200, display: "flex" }}>
-        <img src="/lorem-logo.svg" alt="" style={{ width: "100%" }} />
+        <img src="/lorem-logo.svg" alt="" style={{ width: 1 }} />
       </Link>
       <TextField
         id="search-bar"

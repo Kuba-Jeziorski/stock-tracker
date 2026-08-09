@@ -42,23 +42,25 @@ export const StockList = () => {
       sx={{
         width: 1 / 5,
         border: 1,
-        height: "100%",
+        height: 1,
         p: 1,
       }}
     >
-      <Box sx={{ height: "100%", overflow: "auto", p: 1 }}>
-        {data.map((stock) => (
-          <StockListRecord
-            key={stock.symbol}
-            stock={stock}
-            isBookmarked={bookmarks.has(stock.symbol)}
-            onToggleBookmark={(symbol) =>
-              bookmarks.has(symbol)
-                ? facade.removeBookmark(symbol)
-                : facade.addBookmark(symbol)
-            }
-          />
-        ))}
+      <Box sx={{ height: 1, overflow: "auto", p: 1 }}>
+        {data.length
+          ? data.map((stock) => (
+              <StockListRecord
+                key={stock.symbol}
+                stock={stock}
+                isBookmarked={bookmarks.has(stock.symbol)}
+                onToggleBookmark={(symbol) =>
+                  bookmarks.has(symbol)
+                    ? facade.removeBookmark(symbol)
+                    : facade.addBookmark(symbol)
+                }
+              />
+            ))
+          : "No records"}
       </Box>
     </Box>
   );

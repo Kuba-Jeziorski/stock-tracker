@@ -14,7 +14,7 @@ function App() {
         maxHeight: "100vh",
       }}
     >
-      <Stack direction="column" spacing={4} sx={{ height: "100%" }}>
+      <Stack direction="column" spacing={4} sx={{ height: 1 }}>
         <Menu />
         <StockContainer />
       </Stack>
