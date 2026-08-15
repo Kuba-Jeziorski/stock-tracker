@@ -1,4 +1,11 @@
-import type { GetPaginationItemsArgs, PaginationItem } from "../domain/models";
+type PaginationItem = number | "start-ellipsis" | "end-ellipsis";
+
+type GetPaginationItemsArgs = {
+  page: number;
+  count: number;
+  siblingCount: number;
+  boundaryCount: number;
+};
 
 const range = (start: number, end: number): number[] => {
   if (end < start) {

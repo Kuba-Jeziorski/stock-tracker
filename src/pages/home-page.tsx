@@ -1,5 +1,5 @@
 import { Container, Stack } from "@mui/material";
-import { StockList } from "../features/stock-list/presentation/main";
+import { StocksComponent } from "../features/stock-list/presentation/stock-component";
 import { useEffect } from "react";
 import { setTabTitle } from "../utils/set-tab-title";
 
@@ -13,7 +13,7 @@ export const HomePage = () => {
       <Stack>
         {/* Watchlist */}
         {/* Filter & Sort */}
-        <StockList />
+        <StocksComponent />
       </Stack>
     </Container>
   );
