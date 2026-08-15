@@ -10,7 +10,10 @@ export const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
         <p>{error instanceof Error ? error.message : ""}</p>
         <Button
           variant="contained"
-          sx={{ backgroundColor: "custom.navy", color: "custom.light" }}
+          sx={{
+            backgroundColor: "custom.background.navy",
+            color: "custom.text.secondary",
+          }}
           onClick={resetErrorBoundary}
         >
           {TRY_AGAIN}
