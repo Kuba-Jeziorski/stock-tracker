@@ -1,23 +1,7 @@
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  border-radius: 4px;
-  background: #0094f710;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #0094f7;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #003253;
-}
-
 * {
   box-sizing: border-box;
   font-family: sans-serif;
+  color: #000;
 }
 
 body {
