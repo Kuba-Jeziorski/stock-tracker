@@ -1,7 +1,33 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import { Layout } from "../ui/Layout";
+import { Layout } from "../ui/layout";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { COMPARE_URL } from "../constants/constants";
+import { lazy, Suspense } from "react";
+import { Spinner } from "../ui/spinner";
+
+const HomePage = lazy(() =>
+  import("../pages/home-page").then((module) => ({
+    default: module.HomePage,
+  })),
+);
+
+const ComparePage = lazy(() =>
+  import("../pages/compare-page").then((module) => ({
+    default: module.ComparePage,
+  })),
+);
+
+const SingleStockPage = lazy(() =>
+  import("../pages/single-stock-page").then((module) => ({
+    default: module.SingleStockPage,
+  })),
+);
+
+const ErrorPage = lazy(() =>
+  import("../pages/error-page").then((module) => ({
+    default: module.ErrorPage,
+  })),
+);
 
 const router = createBrowserRouter([
   {
@@ -14,19 +40,35 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <h1>Homepage</h1>,
+        Component: () => (
+          <Suspense fallback={<Spinner />}>
+            <HomePage />
+          </Suspense>
+        ),
       },
       {
         path: `${COMPARE_URL}`,
-        Component: () => <h1>Compare</h1>,
+        Component: () => (
+          <Suspense fallback={<Spinner />}>
+            <ComparePage />
+          </Suspense>
+        ),
       },
       {
         path: ":stockTricker",
-        Component: () => <h1>Single stock</h1>,
+        Component: () => (
+          <Suspense fallback={<Spinner />}>
+            <SingleStockPage />
+          </Suspense>
+        ),
       },
       {
         path: "*",
-        Component: () => <h1>Page not found</h1>,
+        Component: () => (
+          <Suspense fallback={<Spinner />}>
+            <ErrorPage />
+          </Suspense>
+        ),
       },
     ],
   },

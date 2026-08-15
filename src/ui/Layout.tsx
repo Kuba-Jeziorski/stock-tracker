@@ -1,5 +1,5 @@
 import { Container, Stack } from "@mui/material";
-import { Navigation } from "./Navigation";
+import { Navigation } from "./navigation";
 
 type Props = {
   children: React.ReactNode;
