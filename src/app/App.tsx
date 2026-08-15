@@ -1,6 +1,7 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import { Layout } from "../ui/Layout";
 import { createTheme, ThemeProvider } from "@mui/material";
+import { COMPARE_URL } from "../constants/constants";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
         element: <h1>Homepage</h1>,
       },
       {
-        path: "compare",
+        path: `${COMPARE_URL}`,
         Component: () => <h1>Compare</h1>,
       },
       {

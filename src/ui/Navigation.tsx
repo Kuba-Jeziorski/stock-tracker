@@ -1,4 +1,5 @@
 import { Box, Link } from "@mui/material";
+import { COMPARE_LABEL, COMPARE_URL } from "../constants/constants";
 
 export const Navigation = () => {
   return (
@@ -18,10 +19,14 @@ export const Navigation = () => {
       </Link>
       {/* search input */}
       <Link
-        href="/compare"
-        sx={{ textDecoration: "none", color: "custom.light" }}
+        href={`/${COMPARE_URL}`}
+        sx={{
+          textDecoration: "none",
+          color: "custom.light",
+          textTransform: "capitalize",
+        }}
       >
-        Compare
+        {COMPARE_LABEL}
       </Link>
     </Box>
   );
