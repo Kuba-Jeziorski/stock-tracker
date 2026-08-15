@@ -1,25 +1,5 @@
-import { Container, Stack } from "@mui/material";
-
-import { Menu } from "./shared/components/menu";
-import { StockContainer } from "./shared/components/stock-container";
-
 function App() {
-  return (
-    <Container
-      maxWidth={false}
-      sx={{
-        paddingTop: 4,
-        paddingBottom: 4,
-        height: "100vh",
-        maxHeight: "100vh",
-      }}
-    >
-      <Stack direction="column" spacing={4} sx={{ height: 1 }}>
-        <Menu />
-        <StockContainer />
-      </Stack>
-    </Container>
-  );
+  return <h1>Homepage</h1>;
 }
 
 export default App;
