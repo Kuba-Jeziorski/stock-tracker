@@ -1,12 +1,9 @@
 import { Container, Stack } from "@mui/material";
-import { StocksComponent } from "../features/stock-list/presentation/stock-component";
-import { useEffect } from "react";
+import { StocksComponent } from "../features/stock-list/presentation/stock-list-container";
 import { setTabTitle } from "../utils/set-tab-title";
 
 export const HomePage = () => {
-  useEffect(() => {
-    setTabTitle("Home");
-  }, []);
+  setTabTitle("Home");
 
   return (
     <Container maxWidth={false} disableGutters>

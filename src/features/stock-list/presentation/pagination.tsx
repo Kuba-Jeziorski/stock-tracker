@@ -1,17 +1,19 @@
 import { Box, Button, Typography } from "@mui/material";
-import { BOUNDARY_COUNT, PER_PAGE, SIBLING_COUNT } from "../domain/constants";
+import { BOUNDARY_COUNT, PER_PAGE, SIBLING_COUNT } from "../core/constants";
 import { getPaginationItems } from "../core/pagination";
-import type { Stock } from "../domain/models";
 
 type Props = {
-  stocks: Stock[];
+  totalCount: number;
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export const Pagination = ({ stocks, currentPage, setCurrentPage }: Props) => {
-  const stockQuantity = stocks.length;
-  const pagesQuantity = Math.max(1, Math.ceil(stockQuantity / PER_PAGE));
+export const Pagination = ({
+  totalCount,
+  currentPage,
+  setCurrentPage,
+}: Props) => {
+  const pagesQuantity = Math.max(1, Math.ceil(totalCount / PER_PAGE));
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === pagesQuantity;
 

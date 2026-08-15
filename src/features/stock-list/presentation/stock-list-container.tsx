@@ -1,7 +1,7 @@
 import { companies } from "../../../assets/data/stocks.json";
 import type { Stock } from "../domain/models";
 import { useState } from "react";
-import { PER_PAGE } from "../domain/constants";
+import { PER_PAGE } from "../core/constants";
 import { StockList } from "./stock-list";
 import { Pagination } from "./pagination";
 
@@ -19,7 +19,7 @@ export const StocksComponent = () => {
     <>
       <StockList stocksPerPage={stocksPerPage} />
       <Pagination
-        stocks={stocks}
+        totalCount={stocks.length}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
