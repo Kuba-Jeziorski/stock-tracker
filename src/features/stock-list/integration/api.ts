@@ -1,1 +1,1 @@
-// receiving the data
+// fetchQuotes (tickers) API call

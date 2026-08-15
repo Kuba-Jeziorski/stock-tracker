@@ -3,3 +3,5 @@ export type Stock = {
   name: string;
   sector: string;
 };
+
+// fetch API types

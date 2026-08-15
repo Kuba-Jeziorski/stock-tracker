@@ -6,8 +6,10 @@ import { StockList } from "./stock-list";
 import { Pagination } from "./pagination";
 
 const stocks: Stock[] = companies;
+// for TanStack
+// const stocksTickers = stocks.map((stock) => stock.ticker);
 
-export const StocksComponent = () => {
+export const StockListContainer = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const stocksPerPage = stocks.slice(
