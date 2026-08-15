@@ -86,7 +86,7 @@ export const StockList = () => {
             marginTop: "0 !important",
           }}
         >
-          {stocksPerPage.map((stock, i) => {
+          {stocksPerPage.map((stock) => {
             return (
               <Box
                 key={stock.ticker}
@@ -97,11 +97,6 @@ export const StockList = () => {
                   borderColor: "custom.table.separator",
                 }}
               >
-                <Typography
-                  sx={{ display: "flex", width: 1, paddingX: 4, paddingY: 2 }}
-                >
-                  {(currentPage - 1) * perPage + i + 1}
-                </Typography>
                 <Typography
                   sx={{
                     display: "flex",
