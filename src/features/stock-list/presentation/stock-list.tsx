@@ -1,8 +1,8 @@
 import { Box, Stack, Typography } from "@mui/material";
-import type { Stock } from "../domain/models";
+import type { DetailedStock } from "../domain/models";
 
 type Props = {
-  stocksPerPage: Stock[];
+  stocksPerPage: DetailedStock[];
 };
 
 export const StockList = ({ stocksPerPage }: Props) => {
@@ -53,6 +53,9 @@ export const StockList = ({ stocksPerPage }: Props) => {
         }}
       >
         {stocksPerPage.map((stock) => {
+          // const formattedChange = stock.change ?? null;
+          console.log(stock.change);
+
           return (
             <Box
               key={stock.ticker}
@@ -88,12 +91,31 @@ export const StockList = ({ stocksPerPage }: Props) => {
                   fontWeight: 600,
                 }}
               >
-                Price
+                {stock.price ? `${stock.price}$` : "N/A"}
               </Typography>
               <Typography
-                sx={{ display: "flex", width: 1, paddingX: 4, paddingY: 2 }}
+                sx={{
+                  display: "flex",
+                  width: 1,
+                  paddingX: 4,
+                  paddingY: 2,
+                  fontWeight: 600,
+                  color: (theme) => {
+                    if (stock.change == null || stock.change === 0) {
+                      return theme.palette.custom.text.primary;
+                    }
+
+                    return stock.change > 0
+                      ? theme.palette.custom.status.positive
+                      : theme.palette.custom.status.negative;
+                  },
+                }}
               >
-                Change %
+                {stock.change == null
+                  ? "N/A"
+                  : stock.change === 0
+                    ? stock.change
+                    : `${stock.change}%`}
               </Typography>
             </Box>
           );

@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material";
 
-// should be moved (where?)
+// TODO: move
 const custom = {
   text: {
     primary: "#000000",
@@ -24,12 +24,12 @@ const custom = {
     navy: "#133458",
   },
   status: {
-    positive: "#f6f7f9",
-    negative: "#f6f7f9",
+    positive: "#16A34A",
+    negative: "#DC2626",
   },
 };
 
-// should be moved (where?)
+// TODO: move
 export const theme = createTheme({
   palette: { custom },
 });
