@@ -3,9 +3,10 @@ import type { DetailedStock } from "../domain/models";
 
 type Props = {
   stocksPerPage: DetailedStock[];
+  isFetching: boolean;
 };
 
-export const StockList = ({ stocksPerPage }: Props) => {
+export const StockList = ({ stocksPerPage, isFetching }: Props) => {
   return (
     <Stack
       direction="column"
@@ -53,9 +54,6 @@ export const StockList = ({ stocksPerPage }: Props) => {
         }}
       >
         {stocksPerPage.map((stock) => {
-          // const formattedChange = stock.change ?? null;
-          console.log(stock.change);
-
           return (
             <Box
               key={stock.ticker}
@@ -75,12 +73,12 @@ export const StockList = ({ stocksPerPage }: Props) => {
                   fontWeight: 600,
                 }}
               >
-                {stock.ticker}
+                {isFetching ? "..." : stock.ticker}
               </Typography>
               <Typography
                 sx={{ display: "flex", width: 1, paddingX: 4, paddingY: 2 }}
               >
-                {stock.name}
+                {isFetching ? "..." : stock.name}
               </Typography>
               <Typography
                 sx={{
@@ -91,7 +89,11 @@ export const StockList = ({ stocksPerPage }: Props) => {
                   fontWeight: 600,
                 }}
               >
-                {stock.price ? `${stock.price}$` : "N/A"}
+                {isFetching
+                  ? "..."
+                  : stock.price === null
+                    ? "N/A"
+                    : `$${stock.price}`}
               </Typography>
               <Typography
                 sx={{
@@ -111,10 +113,10 @@ export const StockList = ({ stocksPerPage }: Props) => {
                   },
                 }}
               >
-                {stock.change == null
-                  ? "N/A"
-                  : stock.change === 0
-                    ? stock.change
+                {isFetching
+                  ? "..."
+                  : stock.change == null
+                    ? "N/A"
                     : `${stock.change}%`}
               </Typography>
             </Box>

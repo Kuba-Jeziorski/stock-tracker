@@ -1,29 +1,23 @@
-import { useEffect, useState } from "react";
 import { fetchQuotes } from "./api";
-import type { StockQuote, StockTicker } from "../domain/models";
+import type { StockTicker } from "../domain/models";
+import { useQuery } from "@tanstack/react-query";
+import { QUOTE_STALE_TIME_MS } from "../core/constants";
 
 export const useQuotes = (tickers: StockTicker[]) => {
-  const [quotes, setQuotes] = useState<PromiseSettledResult<StockQuote>[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+  const {
+    isLoading,
+    isFetching,
+    data: quotes,
+    error,
+  } = useQuery({
+    queryKey: ["quotes", tickers],
+    queryFn: () => fetchQuotes(tickers),
+    // calling this function only if tickers.length > 0
+    enabled: tickers.length > 0,
+    staleTime: QUOTE_STALE_TIME_MS,
+    refetchOnWindowFocus: false,
+    retry: false,
+  });
 
-  useEffect(() => {
-    const getQuotes = async () => {
-      try {
-        setLoading(true);
-
-        const fetched = await fetchQuotes(tickers);
-        setQuotes(fetched);
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-    getQuotes();
-  }, [tickers]);
-
-  return { quotes, loading, error };
+  return { isLoading, isFetching, quotes, error };
 };

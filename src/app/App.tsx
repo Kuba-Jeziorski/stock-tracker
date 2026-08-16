@@ -4,13 +4,7 @@ import { RouterProvider } from "react-router";
 import { router } from "./router";
 import { theme } from "./theme";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 0,
-    },
-  },
-});
+const queryClient = new QueryClient({});
 
 function App() {
   return (

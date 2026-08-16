@@ -5,7 +5,7 @@ import { PER_PAGE } from "../core/constants";
 import { StockList } from "./stock-list";
 import { Pagination } from "./pagination";
 import { useQuotes } from "../integration/use-quotes";
-import { Spinner } from "../../../ui/spinner";
+import { Typography } from "@mui/material";
 
 const stocks: Stock[] = companies;
 
@@ -22,43 +22,44 @@ export const StockListContainer = () => {
     [stocksPerPage],
   );
 
-  const { quotes, loading, error } = useQuotes(stockTickers);
+  const { quotes, isFetching, error } = useQuotes(stockTickers);
 
-  const isLoading = loading;
-  const isError = error;
-  const isEmptyQuotes = quotes.length === 0;
-  const isOk = !isLoading && !isError && !isEmptyQuotes;
+  if (error) {
+    return <Typography>There was an error</Typography>;
+  }
+
+  if (stocks.length === 0) {
+    return <Typography>No records</Typography>;
+  }
+
+  const quotesByTicker = new Map(
+    (quotes ?? []).map((quote) => [quote.ticker, quote]),
+  );
 
   const detailedStocksPerPage = stocksPerPage.map((stock) => {
-    const quoteStock = quotes.find(
-      (quote) =>
-        quote.status === "fulfilled" && quote.value.ticker === stock.ticker,
-    );
+    const quote = quotesByTicker.get(stock.ticker);
 
     return {
       ...stock,
-      price: quoteStock?.status === "fulfilled" ? quoteStock.value.c : null,
-      change: quoteStock?.status === "fulfilled" ? quoteStock.value.dp : null,
+      price: quote?.price ?? null,
+      change: quote?.change ?? null,
     };
   });
 
-  console.log(detailedStocksPerPage);
-
   return (
     <>
-      {isLoading && <Spinner />}
-      {isError && "There was an error"}
-      {isEmptyQuotes && "No records"}
-      {isOk && (
-        <>
-          <StockList stocksPerPage={detailedStocksPerPage} />
-          <Pagination
-            totalCount={stocks.length}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
-        </>
+      {isFetching && (
+        <Typography sx={{ marginBottom: 2 }}>Loading quotes...</Typography>
       )}
+      <StockList
+        stocksPerPage={detailedStocksPerPage}
+        isFetching={isFetching}
+      />
+      <Pagination
+        totalCount={stocks.length}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </>
   );
 };
