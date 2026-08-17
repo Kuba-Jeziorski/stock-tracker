@@ -1,5 +1,5 @@
 import type { StockQuote, StockTicker } from "../domain/models";
-import { QUOTE_FETCH_CONCURRENCY } from "../core/constants";
+// import { QUOTE_FETCH_CONCURRENCY } from "../core/constants";
 
 const FINNHUB_API_KEY = import.meta.env.VITE_FINNHUB_API_KEY;
 
@@ -45,30 +45,27 @@ const fetchQuote = async (ticker: StockTicker): Promise<StockQuote> => {
   };
 };
 
-const mapSettledWithConcurrency = async <T, R>(
+const mapSettledSequentially = async <T, R>(
   items: T[],
-  limit: number,
   mapper: (item: T) => Promise<R>,
 ): Promise<PromiseSettledResult<R>[]> => {
   const results: PromiseSettledResult<R>[] = [];
-  let nextIndex = 0;
 
-  const worker = async () => {
-    while (nextIndex < items.length) {
-      const current = nextIndex;
-      nextIndex += 1;
+  for (const [index, item] of items.entries()) {
+    try {
+      const value = await mapper(item);
 
-      try {
-        const value = await mapper(items[current]);
-        results[current] = { status: "fulfilled", value };
-      } catch (reason) {
-        results[current] = { status: "rejected", reason };
-      }
+      results[index] = {
+        status: "fulfilled",
+        value,
+      };
+    } catch (reason) {
+      results[index] = {
+        status: "rejected",
+        reason,
+      };
     }
-  };
-
-  const workerCount = Math.min(limit, items.length);
-  await Promise.all(Array.from({ length: workerCount }, () => worker()));
+  }
 
   return results;
 };
@@ -80,11 +77,7 @@ export const fetchQuotes = async (
     throw new Error("Missing VITE_FINNHUB_API_KEY");
   }
 
-  const results = await mapSettledWithConcurrency(
-    tickers,
-    QUOTE_FETCH_CONCURRENCY,
-    fetchQuote,
-  );
+  const results = await mapSettledSequentially(tickers, fetchQuote);
 
   const quotes = results.flatMap((result) =>
     result.status === "fulfilled" ? [result.value] : [],
