@@ -5,7 +5,6 @@ import { QUOTE_STALE_TIME_MS } from "../core/constants";
 
 export const useQuotes = (tickers: StockTicker[]) => {
   const {
-    isLoading,
     isFetching,
     data: quotes,
     error,
@@ -19,5 +18,5 @@ export const useQuotes = (tickers: StockTicker[]) => {
     retry: false,
   });
 
-  return { isLoading, isFetching, quotes, error };
+  return { isFetching, quotes, error };
 };

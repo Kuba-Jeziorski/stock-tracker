@@ -1,5 +1,4 @@
 import type { StockQuote, StockTicker } from "../domain/models";
-// import { QUOTE_FETCH_CONCURRENCY } from "../core/constants";
 
 const FINNHUB_API_KEY = import.meta.env.VITE_FINNHUB_API_KEY;
 
@@ -16,6 +15,7 @@ type FinnhubQuote = {
   t: number;
 };
 
+// type predicate can be used only on functions that are returning boolean
 // if isValidQuote returns true treat quote as more specific type (with dp: number, no dp: number | null)
 const isValidQuote = (
   quote: FinnhubQuote,
@@ -38,6 +38,7 @@ const fetchQuote = async (ticker: StockTicker): Promise<StockQuote> => {
     throw new Error(`No quote for ${ticker}`);
   }
 
+  // returning ticker symbol with current price and current change
   return {
     ticker,
     price: quote.c,
@@ -45,21 +46,31 @@ const fetchQuote = async (ticker: StockTicker): Promise<StockQuote> => {
   };
 };
 
-const mapSettledSequentially = async <T, R>(
-  items: T[],
-  mapper: (item: T) => Promise<R>,
-): Promise<PromiseSettledResult<R>[]> => {
-  const results: PromiseSettledResult<R>[] = [];
+// mapSettledSequentially return type is dependent on fetchQuote return type
+// its not known if a fetchQuote fulfilled or rejected
+// there is a build-in union (where T is the return type of a mapper function - fetchQuote):
+// [1] type PromiseFulfilledResult<T> = { status: "fulfilled"; value: T };
+// [2] type PromiseRejectedResult = { status: "rejected"; reason: any };
+// type PromiseSettledResult<T> = PromiseFulfilledResult<T> | PromiseRejectedResult;
+// function is looping over items and changing its shape based on status; returning mixed array
+const mapSettledSequentially = async (
+  items: StockTicker[],
+  mapper: (item: StockTicker) => Promise<StockQuote>,
+): Promise<PromiseSettledResult<StockQuote>[]> => {
+  const results: PromiseSettledResult<StockQuote>[] = [];
 
+  // fetching one by one - preventing parallel requests to Finnhub
   for (const [index, item] of items.entries()) {
     try {
       const value = await mapper(item);
 
+      // [1] changing object shape so it fits the PromiseSettledResult type
       results[index] = {
         status: "fulfilled",
         value,
       };
     } catch (reason) {
+      // [2] changing object shape so it fits the PromiseSettledResult type
       results[index] = {
         status: "rejected",
         reason,
@@ -77,8 +88,12 @@ export const fetchQuotes = async (
     throw new Error("Missing VITE_FINNHUB_API_KEY");
   }
 
+  // not a promise anymore; array of mixed fulfilled and rejected results
   const results = await mapSettledSequentially(tickers, fetchQuote);
 
+  // rejected quotes are changed into empty array and fulfilled ones value is stored in an array
+  // flat is applied so empty arrays are gone and result.value is out of array
+  // at the end there is a simple array with fulfillted quotes
   const quotes = results.flatMap((result) =>
     result.status === "fulfilled" ? [result.value] : [],
   );
