@@ -18,7 +18,7 @@ export const Spinner = () => {
           width: 48,
           height: 48,
           border: "4px solid",
-          borderColor: "primary.background.navy",
+          borderColor: "custom.background.navy",
           borderTopColor: "transparent",
           borderRadius: "50%",
           animation: "spin 1s linear infinite",

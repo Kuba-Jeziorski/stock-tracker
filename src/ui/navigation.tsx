@@ -1,5 +1,6 @@
-import { Box, Link, Typography } from "@mui/material";
+import { Box, Link as MuiLink, Typography } from "@mui/material";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
+import { Link as RouterLink } from "react-router";
 
 import { COMPARE_LABEL, COMPARE_URL } from "../constants/constants";
 
@@ -17,12 +18,17 @@ export const Navigation = () => {
         backgroundColor: "custom.background.navy",
       }}
     >
-      <Link href="/" sx={{ maxWidth: 200, display: "flex" }}>
+      <MuiLink
+        component={RouterLink}
+        to="/"
+        sx={{ maxWidth: 200, display: "flex" }}
+      >
         <img src="/logo.svg" alt="logo" style={{ width: "100%" }} />
-      </Link>
+      </MuiLink>
       {/* search input */}
-      <Link
-        href={`/${COMPARE_URL}`}
+      <MuiLink
+        component={RouterLink}
+        to={`/${COMPARE_URL}`}
         sx={{
           textDecoration: "none",
           color: "custom.text.secondary",
@@ -44,7 +50,7 @@ export const Navigation = () => {
       >
         <CompareArrowsIcon />
         <Typography>{COMPARE_LABEL}</Typography>
-      </Link>
+      </MuiLink>
     </Box>
   );
 };

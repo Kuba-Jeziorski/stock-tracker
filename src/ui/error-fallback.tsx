@@ -1,13 +1,21 @@
 import type { FallbackProps } from "react-error-boundary";
 import { SOMETHING_WENT_WRONG, TRY_AGAIN } from "../constants/constants";
-import { Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 export const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
   return (
-    <div className="h-screen w-full flex items-center justify-center">
-      <div className="flex flex-col gap-3">
-        <h1>{SOMETHING_WENT_WRONG}</h1>
-        <p>{error instanceof Error ? error.message : ""}</p>
+    <Box
+      sx={{
+        height: "100vh",
+        width: 1,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
+        <Typography variant="h1">{SOMETHING_WENT_WRONG}</Typography>
+        <Typography>{error instanceof Error ? error.message : ""}</Typography>
         <Button
           variant="contained"
           sx={{
@@ -18,7 +26,7 @@ export const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
         >
           {TRY_AGAIN}
         </Button>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };

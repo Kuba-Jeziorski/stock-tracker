@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
         Component: CompareRoute,
       },
       {
-        path: ":stockTricker",
+        path: ":stockTicker",
         Component: SingleStockRoute,
       },
       {

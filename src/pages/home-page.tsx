@@ -1,9 +1,9 @@
 import { Container, Stack } from "@mui/material";
 import { StockListContainer } from "../features/stock-list/presentation/stock-list-container";
-import { setTabTitle } from "../utils/set-tab-title";
+import { useTabTitle } from "../utils/use-tab-title";
 
 export const HomePage = () => {
-  setTabTitle("Home");
+  useTabTitle("Home");
 
   return (
     <Container maxWidth={false} disableGutters>
