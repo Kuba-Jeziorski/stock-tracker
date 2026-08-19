@@ -1,25 +1,20 @@
-import { Typography } from "@mui/material";
-import type { Stock } from "../../../types/stock";
-import { getStockPriceQuote } from "../core/get-stock-price-quote";
-import { useQuote } from "../integration/use-quote";
+import type { Detail, OverviewBarVariant } from "../domain/model";
 import { OverviewBar } from "./overview-bar";
 
-type Props = {
-  stock: Stock;
+// <TData> declares a generic type parameter
+type Props<TData> = {
+  data: TData;
+  mapToDetails: (data: TData) => Detail[];
+  variant?: OverviewBarVariant;
 };
 
-export const OverviewBarContainer = ({ stock }: Props) => {
-  const { quote, error } = useQuote(stock.ticker);
-
-  if (error) {
-    return <Typography>There was an error</Typography>;
-  }
-
-  const details = getStockPriceQuote({
-    ...stock,
-    price: quote?.price ?? null,
-    change: quote?.change ?? null,
-  });
-
-  return <OverviewBar variant="large" details={details} />;
+// comma is needed so TData is not interpreted as a React Component
+// <TData,> needs to be declared
+export const OverviewBarContainer = <TData,>({
+  data,
+  mapToDetails,
+  variant = "standard",
+  // Previously declared <TData> can be then used
+}: Props<TData>) => {
+  return <OverviewBar variant={variant} details={mapToDetails(data)} />;
 };

@@ -11,6 +11,7 @@ export const useQuote = (ticker: StockTicker) => {
   } = useQuery({
     queryKey: ["quote", ticker],
     queryFn: () => fetchSettledQuote(ticker),
+    enabled: Boolean(ticker),
     staleTime: QUOTE_STALE_TIME_MS,
     refetchOnWindowFocus: false,
     retry: false,
