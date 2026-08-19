@@ -48,7 +48,26 @@ export const Pagination = ({
     >
       <Button
         sx={{
+          textDecoration: "none",
+          color: "custom.text.secondary",
           backgroundColor: "custom.background.navy",
+          textTransform: "capitalize",
+          display: "flex",
+          alignItems: "center",
+          gap: 2,
+          border: 1,
+          borderColor: "custom.background.navy",
+          borderRadius: 8,
+          paddingX: 2,
+          paddingY: 1,
+          transition: "all 0.3s",
+          "&:hover": {
+            color: "custom.text.navy",
+            backgroundColor: "custom.background.light",
+          },
+          "&:disabled": {
+            borderColor: "custom.button.disabledText",
+          },
         }}
         variant="contained"
         onClick={previousPage}
@@ -80,8 +99,23 @@ export const Pagination = ({
               variant={isActive ? "contained" : "outlined"}
               onClick={() => goToPage(item)}
               sx={{
+                textDecoration: "none",
+                color: "custom.text.secondary",
+                backgroundColor: "custom.background.navy",
+                textTransform: "capitalize",
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+                border: 1,
                 borderColor: "custom.background.navy",
-                color: "custom.background.navy",
+                borderRadius: 8,
+                paddingX: 2,
+                paddingY: 1,
+                transition: "all 0.3s",
+                "&:hover": {
+                  color: "custom.text.navy",
+                  backgroundColor: "custom.background.light",
+                },
                 minWidth: 40,
                 ...(isActive && {
                   backgroundColor: "custom.background.navy",
@@ -96,7 +130,23 @@ export const Pagination = ({
       </Box>
       <Button
         sx={{
+          textDecoration: "none",
+          color: "custom.text.secondary",
           backgroundColor: "custom.background.navy",
+          textTransform: "capitalize",
+          display: "flex",
+          alignItems: "center",
+          gap: 2,
+          border: 1,
+          borderColor: "custom.background.navy",
+          borderRadius: 8,
+          paddingX: 2,
+          paddingY: 1,
+          transition: "all 0.3s",
+          "&:hover": {
+            color: "custom.text.navy",
+            backgroundColor: "custom.background.light",
+          },
         }}
         variant="contained"
         onClick={nextPage}

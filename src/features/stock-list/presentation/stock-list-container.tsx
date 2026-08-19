@@ -48,9 +48,6 @@ export const StockListContainer = () => {
 
   return (
     <>
-      {isFetching && (
-        <Typography sx={{ marginBottom: 2 }}>Loading quotes...</Typography>
-      )}
       <StockList
         stocksPerPage={detailedStocksPerPage}
         isFetching={isFetching}

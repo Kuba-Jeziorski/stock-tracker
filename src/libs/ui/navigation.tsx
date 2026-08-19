@@ -32,6 +32,7 @@ export const Navigation = () => {
         sx={{
           textDecoration: "none",
           color: "custom.text.secondary",
+          backgroundColor: "custom.background.navy",
           textTransform: "capitalize",
           display: "flex",
           alignItems: "center",
