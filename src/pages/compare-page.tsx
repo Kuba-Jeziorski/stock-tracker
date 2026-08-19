@@ -1,4 +1,4 @@
-import { useTabTitle } from "../utils/use-tab-title";
+import { useTabTitle } from "../../libs/utils/use-tab-title";
 
 export const ComparePage = () => {
   useTabTitle("Compare");
