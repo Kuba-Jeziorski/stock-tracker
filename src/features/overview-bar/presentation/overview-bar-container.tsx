@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import type { Stock } from "../../../types/stock";
-import { transformStockToDetails } from "../core/transform-stock-to-details";
+import { getStockPriceQuote } from "../core/get-stock-price-quote";
 import { useQuote } from "../integration/use-quote";
 import { OverviewBar } from "./overview-bar";
 
@@ -15,7 +15,7 @@ export const OverviewBarContainer = ({ stock }: Props) => {
     return <Typography>There was an error</Typography>;
   }
 
-  const details = transformStockToDetails({
+  const details = getStockPriceQuote({
     ...stock,
     price: quote?.price ?? null,
     change: quote?.change ?? null,
