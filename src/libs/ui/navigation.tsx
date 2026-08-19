@@ -2,7 +2,7 @@ import { Box, Link as MuiLink, Typography } from "@mui/material";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import { Link as RouterLink } from "react-router";
 
-import { COMPARE_LABEL, COMPARE_URL } from "../constants/constants";
+import { COMPARE_LABEL, COMPARE_URL } from "../../constants/constants";
 
 export const Navigation = () => {
   return (

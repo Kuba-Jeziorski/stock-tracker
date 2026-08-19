@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./app/app.tsx";
-import { ErrorFallback } from "./ui/error-fallback.tsx";
+import { ErrorFallback } from "./shared/aplication-errors/error-fallback.tsx";
 import { ErrorBoundary } from "react-error-boundary";
 
 let container = document.getElementById("root");

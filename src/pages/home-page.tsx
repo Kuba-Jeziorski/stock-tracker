@@ -1,6 +1,6 @@
 import { Container, Stack } from "@mui/material";
 import { StockListContainer } from "../features/stock-list/presentation/stock-list-container";
-import { useTabTitle } from "../../libs/utils/use-tab-title";
+import { useTabTitle } from "../libs/utils/use-tab-title";
 
 export const HomePage = () => {
   useTabTitle("Home");
