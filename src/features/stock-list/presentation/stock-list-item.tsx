@@ -1,4 +1,6 @@
-import { Box, Skeleton, Typography } from "@mui/material";
+import { Box, Link as MuiLink, Skeleton, Typography } from "@mui/material";
+import { Link as RouterLink } from "react-router";
+
 import type { DetailedStock } from "../domain/models";
 
 type Props = {
@@ -8,13 +10,22 @@ type Props = {
 
 export const StockListItem = ({ stock, isFetching }: Props) => {
   return (
-    <Box
+    <MuiLink
       key={stock.ticker}
+      component={RouterLink}
+      to={`/${stock.ticker}`}
       sx={{
         display: "flex",
         alignItems: "center",
+        textDecoration: "none",
+        color: "custom.text.primary",
         borderBottom: 1,
         borderColor: "custom.table.separator",
+        backgroundColor: "transparent",
+        transition: "all 0.3s",
+        "&:hover": {
+          backgroundColor: "custom.table.background",
+        },
       }}
     >
       <Box
@@ -129,6 +140,6 @@ export const StockListItem = ({ stock, isFetching }: Props) => {
           </Typography>
         )}
       </Box>
-    </Box>
+    </MuiLink>
   );
 };

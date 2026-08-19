@@ -1,6 +1,7 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { BOUNDARY_COUNT, PER_PAGE, SIBLING_COUNT } from "../core/constants";
 import { getPaginationItems } from "../core/pagination";
+import { CustomButton } from "./custom-button";
 
 type Props = {
   totalCount: number;
@@ -46,35 +47,9 @@ export const Pagination = ({
         justifyContent: "space-between",
       }}
     >
-      <Button
-        sx={{
-          textDecoration: "none",
-          color: "custom.text.secondary",
-          backgroundColor: "custom.background.navy",
-          textTransform: "capitalize",
-          display: "flex",
-          alignItems: "center",
-          gap: 2,
-          border: 1,
-          borderColor: "custom.background.navy",
-          borderRadius: 8,
-          paddingX: 2,
-          paddingY: 1,
-          transition: "all 0.3s",
-          "&:hover": {
-            color: "custom.text.navy",
-            backgroundColor: "custom.background.light",
-          },
-          "&:disabled": {
-            borderColor: "custom.button.disabledText",
-          },
-        }}
-        variant="contained"
-        onClick={previousPage}
-        disabled={isFirstPage}
-      >
+      <CustomButton onClick={previousPage} disabled={isFirstPage}>
         Previous page
-      </Button>
+      </CustomButton>
       <Box
         sx={{
           display: "flex",
@@ -86,7 +61,7 @@ export const Pagination = ({
           if (item === "start-ellipsis" || item === "end-ellipsis") {
             return (
               <Typography key={item} sx={{ px: 1 }}>
-                …
+                . . .
               </Typography>
             );
           }
@@ -94,28 +69,11 @@ export const Pagination = ({
           const isActive = item === currentPage;
 
           return (
-            <Button
+            <CustomButton
               key={item}
               variant={isActive ? "contained" : "outlined"}
               onClick={() => goToPage(item)}
               sx={{
-                textDecoration: "none",
-                color: "custom.text.secondary",
-                backgroundColor: "custom.background.navy",
-                textTransform: "capitalize",
-                display: "flex",
-                alignItems: "center",
-                gap: 2,
-                border: 1,
-                borderColor: "custom.background.navy",
-                borderRadius: 8,
-                paddingX: 2,
-                paddingY: 1,
-                transition: "all 0.3s",
-                "&:hover": {
-                  color: "custom.text.navy",
-                  backgroundColor: "custom.background.light",
-                },
                 minWidth: 40,
                 ...(isActive && {
                   backgroundColor: "custom.background.navy",
@@ -124,36 +82,13 @@ export const Pagination = ({
               }}
             >
               {item}
-            </Button>
+            </CustomButton>
           );
         })}
       </Box>
-      <Button
-        sx={{
-          textDecoration: "none",
-          color: "custom.text.secondary",
-          backgroundColor: "custom.background.navy",
-          textTransform: "capitalize",
-          display: "flex",
-          alignItems: "center",
-          gap: 2,
-          border: 1,
-          borderColor: "custom.background.navy",
-          borderRadius: 8,
-          paddingX: 2,
-          paddingY: 1,
-          transition: "all 0.3s",
-          "&:hover": {
-            color: "custom.text.navy",
-            backgroundColor: "custom.background.light",
-          },
-        }}
-        variant="contained"
-        onClick={nextPage}
-        disabled={isLastPage}
-      >
+      <CustomButton onClick={nextPage} disabled={isLastPage}>
         Next page
-      </Button>
+      </CustomButton>
     </Box>
   );
 };
