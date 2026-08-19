@@ -1,11 +1,11 @@
 import { companies } from "../../../assets/data/stocks.json";
-import type { Stock } from "../domain/models";
 import { useMemo, useState } from "react";
 import { PER_PAGE } from "../core/constants";
 import { StockList } from "./stock-list";
 import { Pagination } from "./pagination";
 import { useQuotes } from "../integration/use-quotes";
 import { Typography } from "@mui/material";
+import type { Stock } from "../../../types/stock";
 
 const stocks: Stock[] = companies;
 

@@ -32,7 +32,7 @@ export const StockListItem = ({ stock, isFetching }: Props) => {
         sx={{
           paddingX: 4,
           paddingY: 2,
-          width: 1,
+          width: 1 / 4,
         }}
       >
         {isFetching ? (
@@ -44,8 +44,9 @@ export const StockListItem = ({ stock, isFetching }: Props) => {
           />
         ) : (
           <Typography
+            noWrap
             sx={{
-              display: "flex",
+              display: "block",
               width: 1,
               fontWeight: 600,
             }}
@@ -58,7 +59,7 @@ export const StockListItem = ({ stock, isFetching }: Props) => {
         sx={{
           paddingX: 4,
           paddingY: 2,
-          width: 1,
+          width: 1 / 4,
         }}
       >
         {isFetching ? (
@@ -70,8 +71,9 @@ export const StockListItem = ({ stock, isFetching }: Props) => {
           />
         ) : (
           <Typography
+            noWrap
             sx={{
-              display: "flex",
+              display: "block",
               width: 1,
             }}
           >
@@ -83,7 +85,7 @@ export const StockListItem = ({ stock, isFetching }: Props) => {
         sx={{
           paddingX: 4,
           paddingY: 2,
-          width: 1,
+          width: 1 / 4,
         }}
       >
         {isFetching ? (
@@ -95,8 +97,9 @@ export const StockListItem = ({ stock, isFetching }: Props) => {
           />
         ) : (
           <Typography
+            noWrap
             sx={{
-              display: "flex",
+              display: "block",
               width: 1,
               fontWeight: 600,
             }}
@@ -109,7 +112,7 @@ export const StockListItem = ({ stock, isFetching }: Props) => {
         sx={{
           paddingX: 4,
           paddingY: 2,
-          width: 1,
+          width: 1 / 4,
         }}
       >
         {isFetching ? (
@@ -121,8 +124,9 @@ export const StockListItem = ({ stock, isFetching }: Props) => {
           />
         ) : (
           <Typography
+            noWrap
             sx={{
-              display: "flex",
+              display: "block",
               width: 1,
               fontWeight: 600,
               color: (theme) => {

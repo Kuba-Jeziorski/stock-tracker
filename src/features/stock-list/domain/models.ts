@@ -1,10 +1,4 @@
-export type StockTicker = string;
-
-export type Stock = {
-  ticker: StockTicker;
-  name: string;
-  sector: string;
-};
+import type { Stock, StockTicker } from "../../../types/stock";
 
 export type StockQuote = {
   ticker: StockTicker;
