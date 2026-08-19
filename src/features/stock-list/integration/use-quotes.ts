@@ -1,7 +1,7 @@
-import { fetchQuotes } from "./api";
-import type { StockTicker } from "../domain/models";
 import { useQuery } from "@tanstack/react-query";
 import { QUOTE_STALE_TIME_MS } from "../core/constants";
+import type { StockTicker } from "../../../types/stock";
+import { fetchQuotes } from "./fetch-quotes";
 
 export const useQuotes = (tickers: StockTicker[]) => {
   const {

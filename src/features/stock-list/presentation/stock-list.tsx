@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
-import type { DetailedStock } from "../domain/models";
 import { StockListItem } from "./stock-list-item";
+import type { DetailedStock } from "../../../types/stock";
 
 type Props = {
   stocksPerPage: DetailedStock[];

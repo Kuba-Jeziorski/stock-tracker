@@ -1,7 +1,6 @@
 import { Box, Link as MuiLink, Skeleton, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router";
-
-import type { DetailedStock } from "../domain/models";
+import type { DetailedStock } from "../../../types/stock";
 
 type Props = {
   stock: DetailedStock;
