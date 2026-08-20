@@ -1,6 +1,6 @@
 import {
   FINNHUB_API_KEY,
-  FINNHUB_URL_BASE,
+  FINNHUB_URL_QUOTE_BASE,
 } from "../../../constants/constants";
 import type {
   FinnhubQuote,
@@ -15,7 +15,7 @@ export const fetchQuote = async (ticker: StockTicker): Promise<StockQuote> => {
   }
 
   const response = await fetch(
-    `${FINNHUB_URL_BASE}${ticker}&token=${FINNHUB_API_KEY}`,
+    `${FINNHUB_URL_QUOTE_BASE}${ticker}&token=${FINNHUB_API_KEY}`,
   );
 
   if (!response.ok) {

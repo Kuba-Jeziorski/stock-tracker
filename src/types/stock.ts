@@ -27,3 +27,30 @@ export type FinnhubQuote = {
   pc: number;
   t: number;
 };
+
+export type StockBaseStatistics = {
+  country: string;
+  ipo: string;
+  marketCapitalization: number;
+};
+
+export type StockStatistics = StockBaseStatistics & {
+  sector: string;
+};
+
+export type FinnhubStat = {
+  ticker: StockTicker;
+  name: string;
+  country: string;
+  currency: string;
+  estimateCurrency: string;
+  exchange: string;
+  ipo: string;
+  marketCapitalization: number;
+  logo: string;
+  shareOutstanding: number;
+  finnhubIndustry: string;
+  phone: string;
+  weburl: string;
+  floatingShare: number;
+};

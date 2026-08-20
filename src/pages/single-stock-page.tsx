@@ -1,27 +1,18 @@
 import { Container, Typography } from "@mui/material";
 import { useParams } from "react-router";
-
 import { getStockByTicker } from "../features/overview-bar/core/get-stock-by-ticker";
-import {
-  getStockKeyStatistics,
-  type StockStatistics,
-} from "../features/overview-bar/core/get-stock-key-statistics";
+import { getStockKeyStatistics } from "../features/overview-bar/core/get-stock-key-statistics";
 import { getStockPriceQuote } from "../features/overview-bar/core/get-stock-price-quote";
 import { useQuote } from "../features/overview-bar/integration/use-quote";
 import { OverviewBarContainer } from "../features/overview-bar/presentation/overview-bar-container";
 import { useTabTitle } from "../libs/utils/use-tab-title";
-
-const dummyStock: StockStatistics = {
-  country: "USA",
-  ipo: "AAA",
-  marketCapitalization: 10000,
-  industry: "Technology",
-};
+import { useStat } from "../features/overview-bar/integration/use-stat";
 
 export const SingleStockPage = () => {
   const { stockTicker } = useParams();
   const stock = getStockByTicker(stockTicker);
-  const { quote, error } = useQuote(stock?.ticker ?? "");
+  const { quote, error: quoteError } = useQuote(stock?.ticker ?? "");
+  const { stat, error: statError } = useStat(stock?.ticker ?? "");
 
   useTabTitle(
     stock
@@ -29,11 +20,11 @@ export const SingleStockPage = () => {
       : "Single stock - not a valid ticker",
   );
 
-  if (!stock) {
+  if (!stock || !stat) {
     return <h1>Not a valid ticker</h1>;
   }
 
-  if (error) {
+  if (quoteError || statError) {
     return <Typography>There was an error</Typography>;
   }
 
@@ -52,7 +43,12 @@ export const SingleStockPage = () => {
       />
       Chart
       <OverviewBarContainer
-        data={dummyStock}
+        data={{
+          ...stock,
+          country: stat?.country ?? null,
+          ipo: stat?.ipo ?? null,
+          marketCapitalization: stat?.marketCapitalization ?? null,
+        }}
         mapToDetails={getStockKeyStatistics}
         variant="standard"
       />

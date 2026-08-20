@@ -1,11 +1,5 @@
+import type { StockStatistics } from "../../../types/stock";
 import type { Detail } from "../domain/model";
-
-export type StockStatistics = {
-  country: string;
-  ipo: string;
-  marketCapitalization: number;
-  industry: string;
-};
 
 export const getStockKeyStatistics = (stock: StockStatistics): Detail[] => [
   {
@@ -26,6 +20,6 @@ export const getStockKeyStatistics = (stock: StockStatistics): Detail[] => [
   {
     kind: "text",
     label: "Industry",
-    value: stock.industry,
+    value: stock.sector,
   },
 ];
