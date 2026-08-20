@@ -1,4 +1,4 @@
-import { Container, Typography } from "@mui/material";
+import { Container, Skeleton, Stack, Typography } from "@mui/material";
 import { useParams } from "react-router";
 import { getStockByTicker } from "../features/overview-bar/core/get-stock-by-ticker";
 import { getStockKeyStatistics } from "../features/overview-bar/core/get-stock-key-statistics";
@@ -11,8 +11,16 @@ import { useStat } from "../features/overview-bar/integration/use-stat";
 export const SingleStockPage = () => {
   const { stockTicker } = useParams();
   const stock = getStockByTicker(stockTicker);
-  const { quote, error: quoteError } = useQuote(stock?.ticker ?? "");
-  const { stat, error: statError } = useStat(stock?.ticker ?? "");
+  const {
+    quote,
+    error: quoteError,
+    isFetching: isQuoteFetching,
+  } = useQuote(stock?.ticker ?? "");
+  const {
+    stat,
+    error: statError,
+    isFetching: isStatFetching,
+  } = useStat(stock?.ticker ?? "");
 
   useTabTitle(
     stock
@@ -20,12 +28,26 @@ export const SingleStockPage = () => {
       : "Single stock - not a valid ticker",
   );
 
-  if (!stock || !stat) {
+  if (!stock) {
     return <h1>Not a valid ticker</h1>;
   }
 
   if (quoteError || statError) {
     return <Typography>There was an error</Typography>;
+  }
+
+  const isInitialLoading =
+    (isQuoteFetching && !quote) || (isStatFetching && !stat);
+
+  if (isInitialLoading) {
+    return (
+      <Container maxWidth={false} disableGutters>
+        <Stack spacing={2} sx={{ padding: 2 }}>
+          <Skeleton variant="rectangular" height={88} />
+          <Skeleton variant="rectangular" height={72} />
+        </Stack>
+      </Container>
+    );
   }
 
   return (

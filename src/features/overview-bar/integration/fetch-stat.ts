@@ -7,6 +7,7 @@ import type {
   StockBaseStatistics,
   StockTicker,
 } from "../../../types/stock";
+import { isValidStat } from "../core/is-valid-stat";
 
 export const fetchStat = async (
   ticker: StockTicker,
@@ -24,6 +25,10 @@ export const fetchStat = async (
   }
 
   const stat: FinnhubStat = await response.json();
+
+  if (!isValidStat(stat)) {
+    throw new Error(`No stat for ${ticker}`);
+  }
 
   return {
     country: stat.country,

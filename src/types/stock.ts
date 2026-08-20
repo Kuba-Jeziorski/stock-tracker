@@ -34,19 +34,22 @@ export type StockBaseStatistics = {
   marketCapitalization: number;
 };
 
-export type StockStatistics = StockBaseStatistics & {
+export type StockStatistics = {
+  country: string | null;
+  ipo: string | null;
+  marketCapitalization: number | null;
   sector: string;
 };
 
 export type FinnhubStat = {
   ticker: StockTicker;
   name: string;
-  country: string;
+  country: string | null;
   currency: string;
   estimateCurrency: string;
   exchange: string;
-  ipo: string;
-  marketCapitalization: number;
+  ipo: string | null;
+  marketCapitalization: number | null;
   logo: string;
   shareOutstanding: number;
   finnhubIndustry: string;

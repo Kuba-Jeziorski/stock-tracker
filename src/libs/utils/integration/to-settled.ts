@@ -1,10 +1,10 @@
-import type { StockQuote, StockTicker } from "../../../types/stock";
+import type { StockTicker } from "../../../types/stock";
 
-export const QuoteSettled = async (
+export const toSettled = async <T>(
   ticker: StockTicker,
-  fetchFn: (item: StockTicker) => Promise<StockQuote>,
+  fetchFn: (item: StockTicker) => Promise<T>,
 ) => {
-  let result: PromiseSettledResult<StockQuote>;
+  let result: PromiseSettledResult<T>;
 
   try {
     const value = await fetchFn(ticker);
