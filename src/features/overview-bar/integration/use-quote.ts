@@ -13,8 +13,6 @@ export const useQuote = (ticker: StockTicker) => {
     queryFn: () => fetchSettledQuote(ticker),
     enabled: Boolean(ticker),
     staleTime: QUOTE_STALE_TIME_MS,
-    refetchOnWindowFocus: false,
-    retry: false,
   });
 
   return { isFetching, quote, error };

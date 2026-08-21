@@ -13,8 +13,6 @@ export const useStat = (ticker: StockTicker) => {
     queryFn: () => fetchSettledStat(ticker),
     enabled: Boolean(ticker),
     staleTime: STAT_STALE_TIME_MS,
-    refetchOnWindowFocus: false,
-    retry: false,
   });
 
   return { isFetching, stat, error };

@@ -14,8 +14,6 @@ export const useQuotes = (tickers: StockTicker[]) => {
     // calling this function only if tickers.length > 0
     enabled: tickers.length > 0,
     staleTime: QUOTE_STALE_TIME_MS,
-    refetchOnWindowFocus: false,
-    retry: false,
   });
 
   return { isFetching, quotes, error };

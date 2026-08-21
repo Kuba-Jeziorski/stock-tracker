@@ -19,7 +19,7 @@ export const CustomButton = ({ sx, children, ...props }: Props) => {
         borderRadius: 8,
         paddingX: 2,
         paddingY: 1,
-        transition: "all 0.3s",
+        transition: "color 0.3s, background-color 0.3s",
         "&:hover": {
           color: "custom.text.navy",
           backgroundColor: "custom.background.light",

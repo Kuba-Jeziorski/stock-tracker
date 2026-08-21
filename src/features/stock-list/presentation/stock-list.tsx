@@ -56,7 +56,7 @@ export const StockList = ({ stocksPerPage, isFetching }: Props) => {
       >
         {stocksPerPage.map((stock) => (
           <StockListItem
-            key={stock.name}
+            key={stock.ticker}
             stock={stock}
             isFetching={isFetching}
           />

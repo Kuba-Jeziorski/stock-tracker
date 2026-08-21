@@ -1,7 +1,5 @@
-import { companies } from "../../../assets/data/stocks.json";
 import type { Stock } from "../../../types/stock";
-
-const stocks: Stock[] = companies;
+import { stocksByTicker } from "../../stock-list/core/stock";
 
 export const getStockByTicker = (
   ticker: string | undefined,
@@ -10,7 +8,5 @@ export const getStockByTicker = (
     return undefined;
   }
 
-  const normalizedTicker = ticker.toUpperCase();
-
-  return stocks.find((stock) => stock.ticker === normalizedTicker);
+  return stocksByTicker.get(ticker.toUpperCase());
 };
