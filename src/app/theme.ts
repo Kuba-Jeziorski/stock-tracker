@@ -1,6 +1,5 @@
 import { createTheme } from "@mui/material";
 
-// TODO: move
 const custom = {
   text: {
     primary: "#000000",
@@ -29,7 +28,6 @@ const custom = {
   },
 };
 
-// TODO: move
 export const theme = createTheme({
   palette: { custom },
 });
