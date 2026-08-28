@@ -7,3 +7,5 @@ export const FINNHUB_API_KEY = import.meta.env.VITE_FINNHUB_API_KEY;
 export const FINNHUB_URL_QUOTE_BASE = "https://finnhub.io/api/v1/quote?symbol=";
 export const FINNHUB_URL_STAT_BASE =
   "https://finnhub.io/api/v1/stock/profile2?symbol=";
+export const FINNHUB_URL_NEWS_BASE =
+  "https://finnhub.io/api/v1/company-news?symbol=";

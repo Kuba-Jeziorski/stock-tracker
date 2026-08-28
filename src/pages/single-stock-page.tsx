@@ -7,6 +7,8 @@ import { useTabTitle } from "../libs/utils/use-tab-title";
 import { useStat } from "../features/overview-bar/integration/use-stat";
 import type { DetailedStock, StockStatistics } from "../types/stock";
 import type { Detail } from "../features/overview-bar/domain/model";
+import { NewsBoxContainer } from "../features/news-box/presentation/news-box-container";
+import { useNews } from "../features/news-box/integration/use-news";
 
 export const SingleStockPage = () => {
   const { stockTicker } = useParams();
@@ -21,6 +23,11 @@ export const SingleStockPage = () => {
     error: statError,
     isFetching: isStatFetching,
   } = useStat(stock?.ticker ?? "");
+  const {
+    isFetching: isNewsFetching,
+    news,
+    error: newsError,
+  } = useNews(stock?.ticker ?? "");
 
   useTabTitle(
     stock
@@ -32,12 +39,14 @@ export const SingleStockPage = () => {
     return <h1>Not a valid ticker</h1>;
   }
 
-  if (quoteError || statError) {
+  if (quoteError || statError || newsError) {
     return <Typography>There was an error</Typography>;
   }
 
   const isInitialLoading =
-    (isQuoteFetching && !quote) || (isStatFetching && !stat);
+    (isQuoteFetching && !quote) ||
+    (isStatFetching && !stat) ||
+    (isNewsFetching && !news);
 
   if (isInitialLoading) {
     return (
@@ -85,7 +94,7 @@ export const SingleStockPage = () => {
         // mapToDetails={getStockPriceQuote}
         variant="large"
       />
-      Chart
+      <Typography sx={{ paddingY: 2 }}>Chart</Typography>
       <OverviewBarContainer
         data={{
           ...stock,
@@ -117,6 +126,7 @@ export const SingleStockPage = () => {
         ]}
         variant="standard"
       />
+      <NewsBoxContainer news={news ?? []} />
     </Container>
   );
 };
