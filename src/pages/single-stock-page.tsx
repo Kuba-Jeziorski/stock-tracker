@@ -1,12 +1,12 @@
 import { Container, Skeleton, Stack, Typography } from "@mui/material";
 import { useParams } from "react-router";
 import { getStockByTicker } from "../features/overview-bar/core/get-stock-by-ticker";
-import { getStockKeyStatistics } from "../features/overview-bar/core/get-stock-key-statistics";
-import { getStockPriceQuote } from "../features/overview-bar/core/get-stock-price-quote";
 import { useQuote } from "../features/overview-bar/integration/use-quote";
 import { OverviewBarContainer } from "../features/overview-bar/presentation/overview-bar-container";
 import { useTabTitle } from "../libs/utils/use-tab-title";
 import { useStat } from "../features/overview-bar/integration/use-stat";
+import type { DetailedStock, StockStatistics } from "../types/stock";
+import type { Detail } from "../features/overview-bar/domain/model";
 
 export const SingleStockPage = () => {
   const { stockTicker } = useParams();
@@ -60,7 +60,29 @@ export const SingleStockPage = () => {
           change: quote?.change ?? null,
         }}
         // mapper function that is taking argument of the type T
-        mapToDetails={getStockPriceQuote}
+        mapToDetails={(stock: DetailedStock): Detail[] => [
+          {
+            kind: "text",
+            label: "Ticker",
+            value: stock.ticker,
+          },
+          {
+            kind: "text",
+            label: "Company",
+            value: stock.name,
+          },
+          {
+            kind: "price",
+            label: "Price",
+            value: stock.price,
+          },
+          {
+            kind: "change",
+            label: "Change",
+            value: stock.change,
+          },
+        ]}
+        // mapToDetails={getStockPriceQuote}
         variant="large"
       />
       Chart
@@ -71,7 +93,28 @@ export const SingleStockPage = () => {
           ipo: stat?.ipo ?? null,
           marketCapitalization: stat?.marketCapitalization ?? null,
         }}
-        mapToDetails={getStockKeyStatistics}
+        mapToDetails={(stock: StockStatistics): Detail[] => [
+          {
+            kind: "text",
+            label: "Country",
+            value: stock.country,
+          },
+          {
+            kind: "text",
+            label: "Ipo",
+            value: stock.ipo,
+          },
+          {
+            kind: "price",
+            label: "Market Capitalization",
+            value: stock.marketCapitalization,
+          },
+          {
+            kind: "text",
+            label: "Industry",
+            value: stock.sector,
+          },
+        ]}
         variant="standard"
       />
     </Container>
