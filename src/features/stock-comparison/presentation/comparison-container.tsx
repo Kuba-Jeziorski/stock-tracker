@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { useSearchParams } from "react-router";
 import { ComparisonAutocompleteContainer } from "./comparison-autocomplete-container";
+import { ComparisonTable } from "./comparison-table";
 
 export const ComparisonContainer = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,7 +17,12 @@ export const ComparisonContainer = () => {
         secondTicker={secondTicker}
         setSearchParams={setSearchParams}
       />
-      {areTickersSelected && <p>stock comparing table</p>}
+      {areTickersSelected && (
+        <ComparisonTable
+          firstTicker={firstTicker}
+          secondTicker={secondTicker}
+        />
+      )}
     </Box>
   );
 };
