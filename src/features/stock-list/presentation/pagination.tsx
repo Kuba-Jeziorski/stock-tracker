@@ -6,7 +6,7 @@ import { CustomButton } from "./custom-button";
 type Props = {
   totalCount: number;
   currentPage: number;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentPage: (page: number) => void;
 };
 
 export const Pagination = ({
@@ -26,11 +26,11 @@ export const Pagination = ({
   });
 
   const previousPage = () => {
-    setCurrentPage((current) => Math.max(1, current - 1));
+    setCurrentPage(Math.max(1, currentPage - 1));
   };
 
   const nextPage = () => {
-    setCurrentPage((current) => Math.min(pagesQuantity, current + 1));
+    setCurrentPage(Math.min(pagesQuantity, currentPage + 1));
   };
 
   const goToPage = (page: number) => {
@@ -65,8 +65,8 @@ export const Pagination = ({
               </Typography>
             );
           }
-
           const isActive = item === currentPage;
+          console.log({ item, currentPage, isActive });
 
           return (
             <CustomButton
@@ -75,6 +75,12 @@ export const Pagination = ({
               onClick={() => goToPage(item)}
               sx={{
                 minWidth: 40,
+                backgroundColor: "custom.background.light",
+                color: "custom.text.navy",
+                "&:hover": {
+                  backgroundColor: "custom.background.navy",
+                  color: "custom.text.secondary",
+                },
                 ...(isActive && {
                   backgroundColor: "custom.background.navy",
                   color: "custom.text.secondary",

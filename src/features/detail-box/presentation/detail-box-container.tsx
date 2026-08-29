@@ -11,7 +11,6 @@ export const DetailBoxContainer = ({ news }: Props) => {
     <Stack
       direction="column"
       sx={{
-        marginTop: 4,
         width: 1,
         gap: 2,
         backgroundColor: "custom.background.light",

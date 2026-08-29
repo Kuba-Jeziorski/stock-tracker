@@ -61,7 +61,11 @@ export const SingleStockPage = () => {
   }
 
   return (
-    <Container maxWidth={false} disableGutters>
+    <Container
+      maxWidth={false}
+      disableGutters
+      sx={{ display: "flex", flexDirection: "column", gap: 4 }}
+    >
       <OverviewBarContainer
         // type T needs to be provided so it can be used in the mapper function
         data={{
@@ -95,7 +99,6 @@ export const SingleStockPage = () => {
         // mapToDetails={getStockPriceQuote}
         variant="large"
       />
-      <Typography sx={{ paddingY: 2 }}>Chart</Typography>
       <OverviewBarContainer
         data={{
           ...stock,

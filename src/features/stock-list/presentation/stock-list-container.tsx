@@ -1,13 +1,25 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Typography } from "@mui/material";
 import { PER_PAGE } from "../core/constants";
 import { stocks } from "../core/stock";
 import { useQuotes } from "../integration/use-quotes";
 import { Pagination } from "./pagination";
 import { StockList } from "./stock-list";
+import { useSearchParams } from "react-router";
 
 export const StockListContainer = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const currentPage = Number(searchParams.get("page")) || 1;
+
+  const hanglePageChange = (newPage: number) => {
+    if (newPage === 1) {
+      searchParams.delete("page");
+      setSearchParams(searchParams);
+    } else {
+      setSearchParams({ page: String(newPage) });
+    }
+  };
 
   const stocksPerPage = useMemo(
     () => stocks.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE),
@@ -54,7 +66,7 @@ export const StockListContainer = () => {
       <Pagination
         totalCount={stocks.length}
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
+        setCurrentPage={hanglePageChange}
       />
     </>
   );
