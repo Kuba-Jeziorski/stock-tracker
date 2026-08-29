@@ -3,6 +3,7 @@ import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import { Link as RouterLink } from "react-router";
 
 import { COMPARE_LABEL, COMPARE_URL } from "../../constants/constants";
+import { SearchContainer } from "../../features/search/presentation/search-container";
 
 export const Navigation = () => {
   return (
@@ -21,11 +22,20 @@ export const Navigation = () => {
       <MuiLink
         component={RouterLink}
         to="/"
-        sx={{ maxWidth: 200, display: "flex" }}
+        sx={{ maxWidth: 200, display: "flex", flexShrink: 0 }}
       >
         <img src="/logo.svg" alt="logo" style={{ width: "100%" }} />
       </MuiLink>
-      {/* search input */}
+      <Box
+        sx={{
+          flex: 1,
+          minWidth: 0,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <SearchContainer />
+      </Box>
       <MuiLink
         component={RouterLink}
         to={`/${COMPARE_URL}`}
@@ -36,6 +46,7 @@ export const Navigation = () => {
           textTransform: "capitalize",
           display: "flex",
           alignItems: "center",
+          flexShrink: 0,
           gap: 2,
           border: 1,
           borderColor: "custom.background.light",

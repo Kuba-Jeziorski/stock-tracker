@@ -12,7 +12,7 @@ export const NewsBox = ({ news }: Props) => {
       direction="column"
       sx={{
         gap: 2,
-        "& > *:not(:first-child)": {
+        "& > *:not(:first-of-type)": {
           paddingTop: 2,
           borderTop: "1px solid",
           borderColor: "custom.table.separator",
