@@ -68,7 +68,6 @@ const bodyRowSx: SxProps<Theme> = {
 export const ComparisonTable = ({ firstTicker, secondTicker }: Props) => {
   const firstStock = getStockByTicker(firstTicker);
   const secondStock = getStockByTicker(secondTicker);
-  console.log(secondStock);
 
   const {
     quote: firstQuote,

@@ -1,13 +1,17 @@
 import { useMemo } from "react";
 import { Typography } from "@mui/material";
 import { PER_PAGE } from "../core/constants";
-import { stocks } from "../../../constants/stocks/stocks";
 import { useQuotes } from "../integration/use-quotes";
 import { Pagination } from "./pagination";
 import { StockList } from "./stock-list";
 import { useSearchParams } from "react-router";
+import type { Stock } from "../../../types/stock";
 
-export const StockListContainer = () => {
+type Props = {
+  visibleStocks: Stock[];
+};
+
+export const StockListContainer = ({ visibleStocks }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const currentPage = Number(searchParams.get("page")) || 1;
@@ -22,8 +26,9 @@ export const StockListContainer = () => {
   };
 
   const stocksPerPage = useMemo(
-    () => stocks.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE),
-    [currentPage],
+    () =>
+      visibleStocks.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE),
+    [currentPage, visibleStocks],
   );
 
   const stockTickers = useMemo(
@@ -53,7 +58,7 @@ export const StockListContainer = () => {
     return <Typography>There was an error</Typography>;
   }
 
-  if (stocks.length === 0) {
+  if (visibleStocks.length === 0) {
     return <Typography>No records</Typography>;
   }
 
@@ -64,7 +69,7 @@ export const StockListContainer = () => {
         isFetching={isFetching}
       />
       <Pagination
-        totalCount={stocks.length}
+        totalCount={visibleStocks.length}
         currentPage={currentPage}
         setCurrentPage={hanglePageChange}
       />
