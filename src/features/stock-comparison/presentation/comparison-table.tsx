@@ -68,6 +68,7 @@ const bodyRowSx: SxProps<Theme> = {
 export const ComparisonTable = ({ firstTicker, secondTicker }: Props) => {
   const firstStock = getStockByTicker(firstTicker);
   const secondStock = getStockByTicker(secondTicker);
+  console.log(secondStock);
 
   const {
     quote: firstQuote,
@@ -93,13 +94,24 @@ export const ComparisonTable = ({ firstTicker, secondTicker }: Props) => {
     isFetching: isSecondStatFetching,
   } = useStat(secondTicker);
 
-  if (
-    firstQuoteError ||
-    secondQuoteError ||
-    firstStatError ||
-    secondStatError
-  ) {
-    return <Typography>There was an error</Typography>;
+  if (firstQuoteError || firstStatError) {
+    return (
+      <Typography>
+        First selected stock{" "}
+        {`${firstStock?.name ? `(${firstStock.name} - ${firstTicker})` : ""}`}{" "}
+        is not available
+      </Typography>
+    );
+  }
+
+  if (secondQuoteError || secondStatError) {
+    return (
+      <Typography>
+        Second selected stock{" "}
+        {`${secondStock?.name ? `(${secondStock.name} - ${secondTicker})` : ""}`}{" "}
+        is not available
+      </Typography>
+    );
   }
 
   const isInitialLoading =
@@ -178,7 +190,7 @@ export const ComparisonTable = ({ firstTicker, secondTicker }: Props) => {
                         { color: getChangeColor(columns[0].change) },
                       ]}
                     >
-                      {significantFiguresFormatter(columns[0][row.key], 3)}%
+                      {significantFiguresFormatter(columns[0][row.key], 2)}%
                     </TableCell>
                     <TableCell
                       sx={[
@@ -186,7 +198,7 @@ export const ComparisonTable = ({ firstTicker, secondTicker }: Props) => {
                         { color: getChangeColor(columns[1].change) },
                       ]}
                     >
-                      {significantFiguresFormatter(columns[1][row.key], 3)}%
+                      {significantFiguresFormatter(columns[1][row.key], 2)}%
                     </TableCell>
                   </>
                 ) : (

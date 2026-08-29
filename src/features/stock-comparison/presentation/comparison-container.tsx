@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useSearchParams } from "react-router";
 import { ComparisonAutocompleteContainer } from "./comparison-autocomplete-container";
 import { ComparisonTable } from "./comparison-table";
@@ -11,7 +11,7 @@ export const ComparisonContainer = () => {
   const areTickersSelected = firstTicker && secondTicker;
 
   return (
-    <Box>
+    <Stack direction="column" sx={{ gap: 2 }}>
       <ComparisonAutocompleteContainer
         firstTicker={firstTicker}
         secondTicker={secondTicker}
@@ -23,6 +23,6 @@ export const ComparisonContainer = () => {
           secondTicker={secondTicker}
         />
       )}
-    </Box>
+    </Stack>
   );
 };
