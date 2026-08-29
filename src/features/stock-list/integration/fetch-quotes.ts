@@ -1,5 +1,5 @@
 import type { StockQuote, StockTicker } from "../../../types/stock";
-import { fetchQuote } from "../../../libs/utils/integration/fetch-quote";
+import { fetchQuote } from "../../../libs/utils/integration/quote/fetch-quote";
 import { mapSettledSequentially } from "./map-settled-sequentially";
 
 export const fetchQuotes = async (

@@ -1,43 +1,30 @@
 import {
+  Skeleton,
   Table,
   TableContainer,
   TableCell,
   TableHead,
   TableRow,
   TableBody,
+  Typography,
+  Link as MuiLink,
 } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
+import { getStockByTicker } from "../../overview-bar/core/get-stock-by-ticker";
+import { useQuote } from "../../../libs/utils/integration/quote/use-quote";
+import { useStat } from "../../../libs/utils/integration/stat/use-stat";
 import type { StockTicker } from "../../../types/stock";
 import { rows } from "../core/rows";
 import { createColumn } from "../core/create-column";
+import { Link as RouterLink } from "react-router";
+import { marketCapitalizationFormatter } from "../../../shared/formatters/market-capitalization-formatter";
+import { getChangeColor } from "../../../shared/formatters/get-change-color";
+import { significantFiguresFormatter } from "../../../shared/formatters/significant-figures-formatter";
 
 type Props = {
   firstTicker: StockTicker;
   secondTicker: StockTicker;
 };
-
-const dummyColumns = [
-  createColumn({
-    name: "name 1",
-    ticker: "ticker 1",
-    country: "country 1",
-    ipo: "ipo 1",
-    marketCapitalization: 1,
-    industry: "industry 1",
-    currentPrice: 1,
-    change: 1,
-  }),
-  createColumn({
-    name: "name 2",
-    ticker: "ticker 2",
-    country: "country 2",
-    ipo: "ipo 2",
-    marketCapitalization: 2,
-    industry: "industry 2",
-    currentPrice: 2,
-    change: 2,
-  }),
-];
 
 const tableContainerSx: SxProps<Theme> = {
   marginTop: 4,
@@ -79,6 +66,91 @@ const bodyRowSx: SxProps<Theme> = {
 };
 
 export const ComparisonTable = ({ firstTicker, secondTicker }: Props) => {
+  const firstStock = getStockByTicker(firstTicker);
+  const secondStock = getStockByTicker(secondTicker);
+
+  const {
+    quote: firstQuote,
+    error: firstQuoteError,
+    isFetching: isFirstQuoteFetching,
+  } = useQuote(firstTicker);
+
+  const {
+    quote: secondQuote,
+    error: secondQuoteError,
+    isFetching: isSecondQuoteFetching,
+  } = useQuote(secondTicker);
+
+  const {
+    stat: firstStat,
+    error: firstStatError,
+    isFetching: isFirstStatFetching,
+  } = useStat(firstTicker);
+
+  const {
+    stat: secondStat,
+    error: secondStatError,
+    isFetching: isSecondStatFetching,
+  } = useStat(secondTicker);
+
+  if (
+    firstQuoteError ||
+    secondQuoteError ||
+    firstStatError ||
+    secondStatError
+  ) {
+    return <Typography>There was an error</Typography>;
+  }
+
+  const isInitialLoading =
+    (isFirstQuoteFetching && !firstQuote) ||
+    (isSecondQuoteFetching && !secondQuote) ||
+    (isFirstStatFetching && !firstStat) ||
+    (isSecondStatFetching && !secondStat);
+
+  if (
+    isInitialLoading ||
+    !firstQuote ||
+    !secondQuote ||
+    !firstStat ||
+    !secondStat
+  ) {
+    return (
+      <Skeleton
+        variant="rectangular"
+        height={400}
+        sx={{ marginTop: 4, borderRadius: 4 }}
+      />
+    );
+  }
+
+  const columns = [
+    createColumn({
+      name: firstStock?.name ?? "",
+      ticker: firstTicker,
+      country: firstStat.country,
+      ipo: firstStat.ipo,
+      marketCapitalization: marketCapitalizationFormatter(
+        firstStat.marketCapitalization,
+      ),
+      industry: firstStock?.sector ?? "",
+      currentPrice: `$${firstQuote.price}`,
+      change: firstQuote.change,
+    }),
+    createColumn({
+      name: secondStock?.name ?? "",
+      ticker: secondTicker,
+      country: secondStat.country,
+      ipo: secondStat.ipo,
+      marketCapitalization: marketCapitalizationFormatter(
+        secondStat.marketCapitalization,
+      ),
+      industry: secondStock?.sector ?? "",
+      currentPrice: `$${secondQuote.price}`,
+      change: secondQuote.change,
+    }),
+  ];
+
   return (
     <TableContainer sx={tableContainerSx}>
       <Table>
@@ -86,10 +158,10 @@ export const ComparisonTable = ({ firstTicker, secondTicker }: Props) => {
           <TableRow>
             <TableCell sx={headCellSx} />
             <TableCell sx={headCellSx}>
-              FIRST_STOCK_NAME ({firstTicker})
+              {firstStock?.name ?? firstTicker} ({firstTicker})
             </TableCell>
             <TableCell sx={headCellSx}>
-              SECOND_STOCK_NAME ({secondTicker})
+              {secondStock?.name ?? secondTicker} ({secondTicker})
             </TableCell>
           </TableRow>
         </TableHead>
@@ -97,12 +169,71 @@ export const ComparisonTable = ({ firstTicker, secondTicker }: Props) => {
           {rows.map((row) => {
             return (
               <TableRow key={row.key} sx={bodyRowSx}>
-                <TableCell sx={labelCellSx}>{row.label}</TableCell>
-                <TableCell sx={cellSx}>{dummyColumns[0][row.key]}</TableCell>
-                <TableCell sx={cellSx}>{dummyColumns[1][row.key]}</TableCell>
+                {row.key === "change" ? (
+                  <>
+                    <TableCell sx={labelCellSx}>{row.label}</TableCell>
+                    <TableCell
+                      sx={[
+                        cellSx,
+                        { color: getChangeColor(columns[0].change) },
+                      ]}
+                    >
+                      {significantFiguresFormatter(columns[0][row.key], 3)}%
+                    </TableCell>
+                    <TableCell
+                      sx={[
+                        cellSx,
+                        { color: getChangeColor(columns[1].change) },
+                      ]}
+                    >
+                      {significantFiguresFormatter(columns[1][row.key], 3)}%
+                    </TableCell>
+                  </>
+                ) : (
+                  <>
+                    <TableCell sx={labelCellSx}>{row.label}</TableCell>
+                    <TableCell sx={cellSx}>{columns[0][row.key]}</TableCell>
+                    <TableCell sx={cellSx}>{columns[1][row.key]}</TableCell>
+                  </>
+                )}
               </TableRow>
             );
           })}
+          <TableCell sx={cellSx} />
+          <TableCell sx={cellSx}>
+            <MuiLink
+              component={RouterLink}
+              to={`/${columns[0].ticker}`}
+              sx={{
+                textDecoration: "none",
+                color: "custom.text.primary",
+                fontWeight: 600,
+                transition: "color 0.3s",
+                "&:hover": {
+                  color: "custom.text.navy",
+                },
+              }}
+            >
+              Zobacz więcej
+            </MuiLink>
+          </TableCell>
+          <TableCell sx={cellSx}>
+            <MuiLink
+              component={RouterLink}
+              to={`/${columns[1].ticker}`}
+              sx={{
+                textDecoration: "none",
+                color: "custom.text.primary",
+                fontWeight: 600,
+                transition: "color 0.3s",
+                "&:hover": {
+                  color: "custom.text.navy",
+                },
+              }}
+            >
+              Zobacz więcej
+            </MuiLink>
+          </TableCell>
         </TableBody>
       </Table>
     </TableContainer>

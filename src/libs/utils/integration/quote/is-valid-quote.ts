@@ -1,6 +1,6 @@
 // type predicate can be used only on functions that are returning boolean
 
-import type { FinnhubQuote } from "../../../types/stock";
+import type { FinnhubQuote } from "../../../../types/stock";
 
 // if isValidQuote returns true treat quote as more specific type (with dp: number, no dp: number | null)
 export const isValidQuote = (

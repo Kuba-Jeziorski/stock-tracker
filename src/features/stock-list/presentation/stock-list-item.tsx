@@ -4,6 +4,7 @@ import type { SxProps, Theme } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router";
 import type { DetailedStock } from "../../../types/stock";
 import { significantFiguresFormatter } from "../../../shared/formatters/significant-figures-formatter";
+import { getChangeColor } from "../../../shared/formatters/get-change-color";
 
 type Props = {
   stock: DetailedStock;
@@ -55,16 +56,6 @@ const changeBaseSx: SxProps<Theme> = {
   display: "block",
   width: 1,
   fontWeight: 600,
-};
-
-const getChangeColor = (change: number | null) => (theme: Theme) => {
-  if (change == null || change === 0) {
-    return theme.palette.custom.text.primary;
-  }
-
-  return change > 0
-    ? theme.palette.custom.status.positive
-    : theme.palette.custom.status.negative;
 };
 
 export const StockListItem = memo(({ stock, isFetching }: Props) => {

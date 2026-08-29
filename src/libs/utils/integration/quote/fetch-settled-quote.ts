@@ -1,6 +1,6 @@
-import { fetchQuote } from "../../../libs/utils/integration/fetch-quote";
-import { toSettled } from "../../../libs/utils/integration/to-settled";
-import type { StockQuote, StockTicker } from "../../../types/stock";
+import type { StockQuote, StockTicker } from "../../../../types/stock";
+import { fetchQuote } from "./fetch-quote";
+import { toSettled } from "../to-settled";
 
 export const fetchSettledQuote = async (
   ticker: StockTicker,

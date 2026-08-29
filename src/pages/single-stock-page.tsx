@@ -1,10 +1,10 @@
 import { Container, Skeleton, Stack, Typography } from "@mui/material";
 import { useParams } from "react-router";
 import { getStockByTicker } from "../features/overview-bar/core/get-stock-by-ticker";
-import { useQuote } from "../features/overview-bar/integration/use-quote";
 import { OverviewBarContainer } from "../features/overview-bar/presentation/overview-bar-container";
+import { useQuote } from "../libs/utils/integration/quote/use-quote";
+import { useStat } from "../libs/utils/integration/stat/use-stat";
 import { useTabTitle } from "../libs/utils/use-tab-title";
-import { useStat } from "../features/overview-bar/integration/use-stat";
 import type { DetailedStock, StockStatistics } from "../types/stock";
 import type { Detail } from "../features/overview-bar/domain/model";
 import { useNews } from "../features/detail-box/integration/use-news";
@@ -68,13 +68,11 @@ export const SingleStockPage = () => {
       sx={{ display: "flex", flexDirection: "column", gap: 4 }}
     >
       <OverviewBarContainer
-        // type T needs to be provided so it can be used in the mapper function
         data={{
           ...stock,
           price: quote?.price ?? null,
           change: quote?.change ?? null,
         }}
-        // mapper function that is taking argument of the type T
         mapToDetails={(stock: DetailedStock): Detail[] => [
           {
             kind: "text",

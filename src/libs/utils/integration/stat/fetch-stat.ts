@@ -1,13 +1,13 @@
 import {
   FINNHUB_API_KEY,
   FINNHUB_URL_STAT_BASE,
-} from "../../../constants/constants";
+} from "../../../../constants/constants";
 import type {
   FinnhubStat,
   StockBaseStatistics,
   StockTicker,
-} from "../../../types/stock";
-import { isValidStat } from "../core/is-valid-stat";
+} from "../../../../types/stock";
+import { isValidStat } from "./is-valid-stat";
 
 export const fetchStat = async (
   ticker: StockTicker,
@@ -29,7 +29,6 @@ export const fetchStat = async (
   if (!isValidStat(stat)) {
     throw new Error(`No stat for ${ticker}`);
   }
-
   return {
     country: stat.country,
     ipo: stat.ipo,

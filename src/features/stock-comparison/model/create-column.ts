@@ -5,8 +5,8 @@ export type CreateColumnProps = {
   ticker: StockTicker;
   country: string;
   ipo: string;
-  marketCapitalization: number;
+  marketCapitalization: number | string;
   industry: string;
-  currentPrice: number;
+  currentPrice: number | string;
   change: number;
 };

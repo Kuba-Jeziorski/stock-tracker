@@ -1,12 +1,12 @@
 import {
   FINNHUB_API_KEY,
   FINNHUB_URL_QUOTE_BASE,
-} from "../../../constants/constants";
+} from "../../../../constants/constants";
 import type {
   FinnhubQuote,
   StockQuote,
   StockTicker,
-} from "../../../types/stock";
+} from "../../../../types/stock";
 import { isValidQuote } from "./is-valid-quote";
 
 export const fetchQuote = async (ticker: StockTicker): Promise<StockQuote> => {

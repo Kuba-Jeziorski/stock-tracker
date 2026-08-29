@@ -1,6 +1,6 @@
-import { toSettled } from "../../../libs/utils/integration/to-settled";
-import type { StockBaseStatistics, StockTicker } from "../../../types/stock";
+import type { StockBaseStatistics, StockTicker } from "../../../../types/stock";
 import { fetchStat } from "./fetch-stat";
+import { toSettled } from "../to-settled";
 
 export const fetchSettledStat = async (
   ticker: StockTicker,

@@ -1,4 +1,4 @@
-import type { FinnhubStat } from "../../../types/stock";
+import type { FinnhubStat } from "../../../../types/stock";
 
 export const isValidStat = (
   stat: FinnhubStat,

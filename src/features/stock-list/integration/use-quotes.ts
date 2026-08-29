@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { QUOTE_STALE_TIME_MS } from "../core/constants";
+import { QUOTE_STALE_TIME_MS } from "../../../constants/constants";
 import type { StockTicker } from "../../../types/stock";
 import { fetchQuotes } from "./fetch-quotes";
 
