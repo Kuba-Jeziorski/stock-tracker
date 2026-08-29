@@ -3,6 +3,7 @@ import { Box, Link as MuiLink, Skeleton, Typography } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router";
 import type { DetailedStock } from "../../../types/stock";
+import { significantFiguresFormatter } from "../../../shared/formatters/significant-figures-formatter";
 
 type Props = {
   stock: DetailedStock;
@@ -64,11 +65,7 @@ const getChangeColor = (change: number | null) => (theme: Theme) => {
 
 export const StockListItem = memo(({ stock, isFetching }: Props) => {
   return (
-    <MuiLink
-      component={RouterLink}
-      to={`/${stock.ticker}`}
-      sx={linkSx}
-    >
+    <MuiLink component={RouterLink} to={`/${stock.ticker}`} sx={linkSx}>
       <Box sx={cellSx}>
         {isFetching ? (
           <Skeleton
@@ -124,7 +121,9 @@ export const StockListItem = memo(({ stock, isFetching }: Props) => {
             noWrap
             sx={[changeBaseSx, { color: getChangeColor(stock.change) }]}
           >
-            {stock.change == null ? "N/A" : `${stock.change}%`}
+            {stock.change == null
+              ? "N/A"
+              : `${significantFiguresFormatter(stock.change, 3)}%`}
           </Typography>
         )}
       </Box>
