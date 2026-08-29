@@ -10,6 +10,7 @@ import type { Detail } from "../features/overview-bar/domain/model";
 import { useNews } from "../features/detail-box/integration/use-news";
 import { DetailBoxContainer } from "../features/detail-box/presentation/detail-box-container";
 import { marketCapitalizationFormatter } from "../shared/formatters/market-capitalization-formatter";
+import { significantFiguresFormatter } from "../shared/formatters/significant-figures-formatter";
 
 export const SingleStockPage = () => {
   const { stockTicker } = useParams();
@@ -93,7 +94,7 @@ export const SingleStockPage = () => {
           {
             kind: "change",
             label: "Change",
-            value: stock.change,
+            value: significantFiguresFormatter(stock.change ?? 0, 3),
           },
         ]}
         // mapToDetails={getStockPriceQuote}

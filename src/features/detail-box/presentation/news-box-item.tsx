@@ -43,6 +43,7 @@ export const NewsBoxItem = ({ singleNews }: Props) => {
       <Typography
         variant="h3"
         sx={{
+          width: 4 / 5,
           display: "flex",
           fontSize: 24,
 
@@ -64,7 +65,13 @@ export const NewsBoxItem = ({ singleNews }: Props) => {
           {singleNews.headline}
         </Link>
       </Typography>
-      <Typography>{singleNews.summary}</Typography>
+      <Typography
+        sx={{
+          width: 4 / 5,
+        }}
+      >
+        {singleNews.summary}
+      </Typography>
     </Stack>
   );
 };

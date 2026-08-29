@@ -23,7 +23,7 @@ export const DetailBoxContainer = ({ news }: Props) => {
       <Typography variant="h2" sx={{ fontSize: 32 }}>
         News
       </Typography>
-      <NewsBox news={news} />
+      {news.length > 0 && <NewsBox news={news} />}
     </Stack>
   );
 };
