@@ -7,8 +7,8 @@ import { useTabTitle } from "../libs/utils/use-tab-title";
 import { useStat } from "../features/overview-bar/integration/use-stat";
 import type { DetailedStock, StockStatistics } from "../types/stock";
 import type { Detail } from "../features/overview-bar/domain/model";
-import { NewsBoxContainer } from "../features/news-box/presentation/news-box-container";
-import { useNews } from "../features/news-box/integration/use-news";
+import { useNews } from "../features/detail-box/integration/use-news";
+import { DetailBoxContainer } from "../features/detail-box/presentation/detail-box-container";
 
 export const SingleStockPage = () => {
   const { stockTicker } = useParams();
@@ -126,7 +126,7 @@ export const SingleStockPage = () => {
         ]}
         variant="standard"
       />
-      <NewsBoxContainer news={news ?? []} />
+      <DetailBoxContainer news={news ?? []} />
     </Container>
   );
 };

@@ -1,27 +1,30 @@
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import type { StockSingleNews } from "../domain/model";
+import { NewsBox } from "./news-box";
 
 type Props = {
   news: StockSingleNews[];
 };
 
-export const NewsBoxContainer = ({ news }: Props) => {
-  console.log(news);
-
+export const DetailBoxContainer = ({ news }: Props) => {
   return (
     <Stack
       direction="column"
       sx={{
+        marginTop: 4,
         width: 1,
         gap: 2,
         backgroundColor: "custom.background.light",
         color: "custom.text.primary",
         borderRadius: 8,
+        paddingX: 4,
+        paddingY: 2,
       }}
     >
-      {news.map((singleNews) => {
-        return <p>{singleNews.headline}</p>;
-      })}
+      <Typography variant="h2" sx={{ fontSize: 32 }}>
+        News
+      </Typography>
+      <NewsBox news={news} />
     </Stack>
   );
 };
