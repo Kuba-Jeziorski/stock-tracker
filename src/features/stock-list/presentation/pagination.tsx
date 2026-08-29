@@ -66,7 +66,6 @@ export const Pagination = ({
             );
           }
           const isActive = item === currentPage;
-          console.log({ item, currentPage, isActive });
 
           return (
             <CustomButton

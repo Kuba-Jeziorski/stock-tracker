@@ -10,7 +10,7 @@ type Props = {
   isFetching: boolean;
 };
 
-const linkSx: SxProps<Theme> = {
+const linkSx = (isDisabled: boolean): SxProps<Theme> => ({
   display: "flex",
   alignItems: "center",
   textDecoration: "none",
@@ -22,7 +22,11 @@ const linkSx: SxProps<Theme> = {
   "&:hover": {
     backgroundColor: "custom.table.background",
   },
-};
+  ...(isDisabled && {
+    cursor: "no-drop",
+    opacity: 1 / 2,
+  }),
+});
 
 const cellSx: SxProps<Theme> = {
   paddingX: 4,
@@ -64,8 +68,19 @@ const getChangeColor = (change: number | null) => (theme: Theme) => {
 };
 
 export const StockListItem = memo(({ stock, isFetching }: Props) => {
+  const isDisabled = stock.price === null && stock.change === null;
+
   return (
-    <MuiLink component={RouterLink} to={`/${stock.ticker}`} sx={linkSx}>
+    <MuiLink
+      component={RouterLink}
+      to={`/${stock.ticker}`}
+      onClick={(event) => {
+        if (isDisabled) {
+          event.preventDefault();
+        }
+      }}
+      sx={linkSx(isDisabled)}
+    >
       <Box sx={cellSx}>
         {isFetching ? (
           <Skeleton
