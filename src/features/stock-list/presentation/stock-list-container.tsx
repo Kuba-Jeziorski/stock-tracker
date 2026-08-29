@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Typography } from "@mui/material";
 import { PER_PAGE } from "../core/constants";
-import { stocks } from "../core/stock";
+import { stocks } from "../../../constants/stocks/stocks";
 import { useQuotes } from "../integration/use-quotes";
 import { Pagination } from "./pagination";
 import { StockList } from "./stock-list";

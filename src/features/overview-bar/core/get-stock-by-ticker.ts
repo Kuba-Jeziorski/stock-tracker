@@ -1,5 +1,5 @@
+import { stocksByTicker } from "../../../constants/stocks/stocks-by-ticker";
 import type { Stock } from "../../../types/stock";
-import { stocksByTicker } from "../../stock-list/core/stock";
 
 export const getStockByTicker = (
   ticker: string | undefined,

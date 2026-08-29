@@ -17,7 +17,6 @@ export const OverviewBar = ({ details, variant = "standard" }: Props) => {
             flexItem
             sx={{
               width: "1px",
-
               backgroundColor: "custom.table.separator",
             }}
           />
