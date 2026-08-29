@@ -9,6 +9,7 @@ import type { DetailedStock, StockStatistics } from "../types/stock";
 import type { Detail } from "../features/overview-bar/domain/model";
 import { useNews } from "../features/detail-box/integration/use-news";
 import { DetailBoxContainer } from "../features/detail-box/presentation/detail-box-container";
+import { marketCapitalizationFormatter } from "../shared/formatters/market-capitalization-formatter";
 
 export const SingleStockPage = () => {
   const { stockTicker } = useParams();
@@ -116,7 +117,9 @@ export const SingleStockPage = () => {
           {
             kind: "price",
             label: "Market Capitalization",
-            value: stock.marketCapitalization,
+            value: marketCapitalizationFormatter(
+              stock.marketCapitalization ?? 0,
+            ),
           },
           {
             kind: "text",
