@@ -2,7 +2,7 @@ import type { Sector } from "../../constants/stocks/sectors";
 import type { Filter } from "../../types/filter";
 import type { Stock } from "../../types/stock";
 
-export const applyFiler = (stocks: Stock[], filter: Filter): Stock[] => {
+export const applyFilter = (stocks: Stock[], filter: Filter): Stock[] => {
   const { selectedSectors } = filter;
 
   const filteredStocks = stocks.filter((stock) => {
