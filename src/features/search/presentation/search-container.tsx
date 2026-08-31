@@ -1,7 +1,9 @@
 import { Autocomplete, TextField } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
 import { stocks } from "../../../constants/stocks/stocks";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
+import { useState } from "react";
+import type { Stock } from "../../../types/stock";
 
 const autocompleteSx: SxProps<Theme> = {
   width: 1,
@@ -32,17 +34,28 @@ const autocompleteSx: SxProps<Theme> = {
 };
 
 export const SearchContainer = () => {
+  // selected Stock
+  const [value, setValue] = useState<Stock | null>(null);
+  // string passed to the input
+  const [inputValue, setInputValue] = useState("");
   const navigate = useNavigate();
-  const { stockTicker } = useParams();
 
   return (
     <Autocomplete
       fullWidth
       options={stocks}
-      value={stocks.find((stock) => stock.ticker === stockTicker) ?? null}
+      value={value}
+      inputValue={inputValue}
       getOptionLabel={(stock) => `${stock.name} (${stock.ticker})`}
       isOptionEqualToValue={(option, value) => option.ticker === value.ticker}
-      onChange={(_, stock) => navigate(`/${stock?.ticker}`)}
+      onInputChange={(_, newInputValue) => {
+        setInputValue(newInputValue);
+      }}
+      onChange={(_, stock) => {
+        setValue(null);
+        setInputValue("");
+        navigate(`/${stock?.ticker}`);
+      }}
       renderInput={(params) => (
         <TextField
           {...params}
