@@ -1,4 +1,10 @@
-import { Box, Typography, Link as MuiLink, Skeleton } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Link as MuiLink,
+  Skeleton,
+  Stack,
+} from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import type { WatchlistItemProps } from "../domain/model";
 import { Link as RouterLink } from "react-router";
@@ -72,22 +78,20 @@ export const WatchlistItem = ({ item, isFetching }: Props) => {
           key={item.ticker}
           sx={linkSx}
         >
-          <Box
-            sx={{
-              width: 1,
-              display: "flex",
-              justifyContent: "flex-end",
-              mb: 2,
-            }}
-          >
+          <Stack direction="row" sx={{ alignItems: "center", gap: 1 }}>
+            <Box sx={{ flex: 1 }}>
+              <Typography sx={tickerSx}>{item.ticker}</Typography>
+              <Typography sx={nameSx}>{item.name}</Typography>
+            </Box>
+
             <StarIcon
               sx={{
+                width: 24,
+                fontSize: 24,
                 color: "custom.status.favorite",
               }}
             />
-          </Box>
-          <Typography sx={tickerSx}>{item.ticker}</Typography>
-          <Typography sx={nameSx}>{item.name}</Typography>
+          </Stack>
           <Typography noWrap sx={priceSx}>
             {item.price === null ? "N/A" : `$${item.price}`}
           </Typography>
@@ -99,7 +103,7 @@ export const WatchlistItem = ({ item, isFetching }: Props) => {
               ? "N/A"
               : `${significantFiguresFormatter(item.change, 3)}%`}
           </Typography>
-          {item.logo && <img src={item.logo} width="48" height="48" />}
+          {item.logo && <img src={item.logo} width="32" height="32" />}
         </MuiLink>
       )}
     </>

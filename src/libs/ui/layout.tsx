@@ -33,7 +33,7 @@ export const Layout = ({ children }: Props) => {
             flex: 1,
             minHeight: 0,
             overflow: "auto",
-            p: 4,
+            p: 2,
           }}
         >
           {children}
