@@ -67,8 +67,8 @@ export const WatchlistItem = ({ item, isFetching }: Props) => {
         <Skeleton
           variant="rectangular"
           animation="pulse"
-          width={258}
-          height={258}
+          width={186}
+          height={186}
           sx={{ borderRadius: 4 }}
         />
       ) : (

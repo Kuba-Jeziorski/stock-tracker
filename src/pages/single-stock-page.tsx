@@ -27,6 +27,7 @@ import type { SxProps } from "@mui/material/styles";
 import type { Theme } from "@mui/material/styles";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
+import { WISHLIST_LIMIT } from "../constants/constants";
 
 const wishlistButtonSx = (isWishlisted: boolean): SxProps<Theme> => ({
   textDecoration: "none",
@@ -112,6 +113,10 @@ export const SingleStockPage = () => {
 
   const handleWishlist = (ticker: StockTicker) => {
     const isWishlisted = localStorageItems.includes(ticker);
+
+    if (!isWishlisted && localStorageItems.length >= WISHLIST_LIMIT) {
+      return;
+    }
 
     const updatedArray = isWishlisted
       ? localStorageItems.filter((item) => item !== ticker)
