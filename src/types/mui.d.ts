@@ -26,6 +26,7 @@ declare module "@mui/material/styles" {
     status: {
       positive: string;
       negative: string;
+      favorite: string;
     };
   }
 
@@ -59,6 +60,7 @@ declare module "@mui/material/styles" {
       status?: {
         positive?: string;
         negative?: string;
+        favorite?: string;
       };
     };
   }

@@ -40,7 +40,6 @@ export const Pagination = ({
   return (
     <Box
       sx={{
-        marginTop: 4,
         display: "flex",
         width: 1,
         alignItems: "center",

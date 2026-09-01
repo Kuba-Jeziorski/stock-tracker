@@ -25,6 +25,7 @@ const custom = {
   status: {
     positive: "#16A34A",
     negative: "#DC2626",
+    favorite: "#133458",
   },
 };
 
