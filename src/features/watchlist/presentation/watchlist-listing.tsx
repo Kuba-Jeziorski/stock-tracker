@@ -37,7 +37,7 @@ export const WatchlistListing = () => {
   return (
     <Stack direction="row" sx={{ flex: 1, width: 1, gap: 2, overflow: "auto" }}>
       {DUMMY_DATA.map((item) => (
-        <WatchlistItem item={item} isFetching={isFetching} />
+        <WatchlistItem key={item.ticker} item={item} isFetching={isFetching} />
       ))}
     </Stack>
   );
