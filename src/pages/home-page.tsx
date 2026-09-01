@@ -1,4 +1,4 @@
-import { Container, Stack } from "@mui/material";
+import { Container, Stack, Typography } from "@mui/material";
 import { StockListContainer } from "../features/stock-list/presentation/stock-list-container";
 import { useTabTitle } from "../libs/utils/use-tab-title";
 import { useState } from "react";
@@ -14,9 +14,13 @@ export const HomePage = () => {
   const visibleStocks = applyFilter(stocks, filter);
 
   return (
-    <Container maxWidth={false} disableGutters>
-      <Stack direction="column" sx={{ gap: 3 }}>
+    <Container maxWidth={false} sx={{ height: 1, p: 0 }}>
+      <Stack
+        direction="column"
+        sx={{ gap: 3, height: 1, justifyContent: "end" }}
+      >
         {/* Watchlist */}
+        <Typography>watchlist</Typography>
         <FilterContainer filter={filter} setFilter={setFilter} />
         <StockListContainer visibleStocks={visibleStocks} />
       </Stack>
