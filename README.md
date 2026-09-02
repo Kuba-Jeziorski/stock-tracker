@@ -1,75 +1,75 @@
-# React + TypeScript + Vite
+# Stock Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web app for browsing a curated list of stocks, viewing live quotes and company details, saving a personal watchlist, and comparing two tickers side by side.
 
-Currently, two official plugins are available:
+**This is an MVP.** The feature set is intentionally limited: a fixed universe of companies, sector-only filtering, a small local watchlist, and market data from a single public API. Expect rough edges, rate-limit constraints, and no authentication or persistence beyond the browser.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Stock list** — paginated browse of a static catalog (~100 companies) with current price and daily change
+- **Sector filters** — narrow the list by industry sector
+- **Search** — jump to a company from the header
+- **Stock detail** — quote, country, IPO date, market capitalization, industry, and recent company news
+- **Watchlist** — save up to 5 tickers in `localStorage` and see them on the home page
+- **Compare** — pick two tickers and compare name, quote, and company profile fields
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Coming next
 
-## Expanding the ESLint configuration
+Later versions will add more advanced filtering and sorting, plus charts on the single-stock page and the compare page.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- [React](https://react.dev/) 19 + [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vite.dev/)
+- [MUI](https://mui.com/)
+- [TanStack Query](https://tanstack.com/query)
+- [React Router](https://reactrouter.com/)
+- [Finnhub](https://finnhub.io/) for quotes, company profiles, logos, and news
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Getting started
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Prerequisites
 
+- Node.js (current LTS recommended)
+- npm
+- A free [Finnhub API key](https://finnhub.io/register)
+
+### Setup
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Copy the example env file and add your key:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+cp .env.example .env
 ```
+
+Set `VITE_FINNHUB_API_KEY` in `.env`. Live quotes, company stats, and news will not load without it.
+
+### Run
+
+```bash
+npm run dev
+```
+
+The app opens in the browser (Vite default: `http://localhost:5173`).
+
+## Scripts
+
+| Command           | Description                         |
+| ----------------- | ----------------------------------- |
+| `npm run dev`     | Start the development server        |
+| `npm run build`   | Type-check and build for production |
+| `npm run preview` | Preview the production build        |
+| `npm run lint`    | Run ESLint                          |
+
+## MVP limitations
+
+- Company list is static (`src/assets/data/stocks.json`), not a live exchange listing
+- Watchlist is stored only in the browser (`localStorage`), capped at 5 tickers, and is not synced across devices
+- Filtering is sector-only (richer filters and sorting are planned)
+- Market data depends on Finnhub availability and free-tier rate limits
+- No user accounts or alerts
+- Charts are not in the MVP; they are planned for the single-stock and compare pages
