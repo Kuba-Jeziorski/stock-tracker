@@ -58,7 +58,9 @@ export const StockList = ({ stocksPerPage, isFetching }: Props) => {
           <StockListItem
             key={stock.ticker}
             stock={stock}
-            isFetching={isFetching}
+            isFetching={
+              isFetching && stock.price === null && stock.change === null
+            }
           />
         ))}
       </Box>

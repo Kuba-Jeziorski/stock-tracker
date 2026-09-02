@@ -6,15 +6,18 @@ import {
   Stack,
 } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
-import type { WatchlistItemProps } from "../domain/model";
 import { Link as RouterLink } from "react-router";
+import type { SyntheticEvent } from "react";
 import type { SxProps, Theme } from "@mui/material/styles";
 import { getChangeColor } from "../../../shared/formatters/get-change-color";
 import { significantFiguresFormatter } from "../../../shared/formatters/significant-figures-formatter";
+import type { StockTicker } from "../../../types/stock";
+import { getStockByTicker } from "../../overview-bar/core/get-stock-by-ticker";
+import { useQuote } from "../../../libs/utils/integration/quote/use-quote";
+import { getStockLogoUrl } from "../core/get-stock-logo-url";
 
 type Props = {
-  item: WatchlistItemProps;
-  isFetching: boolean;
+  ticker: StockTicker;
 };
 
 const linkSx: SxProps<Theme> = {
@@ -35,6 +38,15 @@ const linkSx: SxProps<Theme> = {
   },
 };
 
+const headerRowSx: SxProps<Theme> = {
+  alignItems: "start",
+  gap: 1,
+};
+
+const nameBoxSx: SxProps<Theme> = {
+  flex: 1,
+};
+
 const tickerSx: SxProps<Theme> = {
   display: "block",
   width: 1,
@@ -48,6 +60,7 @@ const nameSx: SxProps<Theme> = {
 
 const priceSx: SxProps<Theme> = {
   display: "block",
+  mt: "auto",
   width: 1,
   fontWeight: 600,
 };
@@ -58,54 +71,92 @@ const changeBaseSx: SxProps<Theme> = {
   fontWeight: 600,
 };
 
-export const WatchlistItem = ({ item, isFetching }: Props) => {
-  console.log(isFetching);
+const starSx: SxProps<Theme> = {
+  width: 24,
+  fontSize: 24,
+  color: "custom.status.favorite",
+};
+
+const changeSkeletonSx: SxProps<Theme> = {
+  borderRadius: 4,
+};
+
+const priceSkeletonSx: SxProps<Theme> = {
+  borderRadius: 4,
+  mt: "auto",
+};
+
+const hideBrokenLogo = (event: SyntheticEvent<HTMLImageElement>) => {
+  event.currentTarget.style.display = "none";
+};
+
+export const WatchlistItem = ({ ticker }: Props) => {
+  const currentStock = getStockByTicker(ticker);
+  const {
+    quote,
+    isFetching: isQuoteFetching,
+    error: quoteError,
+  } = useQuote(ticker);
+
+  if (!currentStock) {
+    return <Typography>There was an error</Typography>;
+  }
+
+  const isQuoteLoading = isQuoteFetching && !quote;
+  const priceLabel =
+    quoteError || quote?.price == null ? "N/A" : `$${quote.price}`;
+  const changeLabel =
+    quoteError || quote?.change == null
+      ? "N/A"
+      : `${significantFiguresFormatter(quote.change, 3)}%`;
 
   return (
-    <>
-      {isFetching ? (
+    <MuiLink component={RouterLink} to={`/${ticker}`} sx={linkSx}>
+      <Stack direction="row" sx={headerRowSx}>
+        <Box sx={nameBoxSx}>
+          <Typography sx={tickerSx}>{ticker}</Typography>
+          <Typography sx={nameSx}>{currentStock.name}</Typography>
+        </Box>
+        <StarIcon sx={starSx} />
+      </Stack>
+      {isQuoteLoading ? (
         <Skeleton
           variant="rectangular"
           animation="pulse"
-          width={186}
-          height={186}
-          sx={{ borderRadius: 4 }}
+          width="100%"
+          height={24}
+          sx={priceSkeletonSx}
         />
       ) : (
-        <MuiLink
-          component={RouterLink}
-          to={`/${item.ticker}`}
-          key={item.ticker}
-          sx={linkSx}
-        >
-          <Stack direction="row" sx={{ alignItems: "center", gap: 1 }}>
-            <Box sx={{ flex: 1 }}>
-              <Typography sx={tickerSx}>{item.ticker}</Typography>
-              <Typography sx={nameSx}>{item.name}</Typography>
-            </Box>
-
-            <StarIcon
-              sx={{
-                width: 24,
-                fontSize: 24,
-                color: "custom.status.favorite",
-              }}
-            />
-          </Stack>
-          <Typography noWrap sx={priceSx}>
-            {item.price === null ? "N/A" : `$${item.price}`}
-          </Typography>
-          <Typography
-            noWrap
-            sx={[changeBaseSx, { color: getChangeColor(item.change) }]}
-          >
-            {item.change == null
-              ? "N/A"
-              : `${significantFiguresFormatter(item.change, 3)}%`}
-          </Typography>
-          {item.logo && <img src={item.logo} width="32" height="32" />}
-        </MuiLink>
+        <Typography noWrap sx={priceSx}>
+          {priceLabel}
+        </Typography>
       )}
-    </>
+      {isQuoteLoading ? (
+        <Skeleton
+          variant="rectangular"
+          animation="pulse"
+          width="100%"
+          height={24}
+          sx={changeSkeletonSx}
+        />
+      ) : (
+        <Typography
+          noWrap
+          sx={[changeBaseSx, { color: getChangeColor(quote?.change ?? null) }]}
+        >
+          {changeLabel}
+        </Typography>
+      )}
+      <img
+        src={getStockLogoUrl(ticker)}
+        alt={`${currentStock.name} logo`}
+        width={32}
+        height={32}
+        loading="lazy"
+        decoding="async"
+        onError={hideBrokenLogo}
+      />
+    </MuiLink>
   );
 };

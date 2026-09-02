@@ -1,20 +1,28 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import { QUOTE_STALE_TIME_MS } from "../../../constants/constants";
 import type { StockTicker } from "../../../types/stock";
-import { fetchQuotes } from "./fetch-quotes";
+import { fetchSettledQuote } from "../../../libs/utils/integration/quote/fetch-settled-quote";
 
 export const useQuotes = (tickers: StockTicker[]) => {
-  const {
-    isFetching,
-    data: quotes,
-    error,
-  } = useQuery({
-    queryKey: ["quotes", tickers],
-    queryFn: () => fetchQuotes(tickers),
-    // calling this function only if tickers.length > 0
-    enabled: tickers.length > 0,
-    staleTime: QUOTE_STALE_TIME_MS,
+  const results = useQueries({
+    queries: tickers.map((ticker) => ({
+      queryKey: ["quote", ticker],
+      queryFn: () => fetchSettledQuote(ticker),
+      enabled: Boolean(ticker),
+      staleTime: QUOTE_STALE_TIME_MS,
+    })),
   });
+
+  const quotes = results.flatMap((result) =>
+    result.data ? [result.data] : [],
+  );
+  const isFetching = results.some((result) => result.isFetching);
+  const error =
+    tickers.length > 0 &&
+    results.length > 0 &&
+    results.every((result) => result.isError)
+      ? results[0].error
+      : null;
 
   return { isFetching, quotes, error };
 };

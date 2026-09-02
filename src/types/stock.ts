@@ -32,6 +32,7 @@ export type StockBaseStatistics = {
   country: string;
   ipo: string;
   marketCapitalization: number;
+  logo: string;
 };
 
 export type StockStatistics = {

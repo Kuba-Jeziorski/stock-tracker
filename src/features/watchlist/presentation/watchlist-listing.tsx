@@ -1,13 +1,12 @@
 import { Stack } from "@mui/material";
 import { WatchlistItem } from "./watchlist-item";
-import type { WatchlistItemProps } from "../domain/model";
+import type { StockTicker } from "../../../types/stock";
 
 type Props = {
-  data: WatchlistItemProps[];
-  isFetching: boolean;
+  tickers: StockTicker[];
 };
 
-export const WatchlistListing = ({ data, isFetching }: Props) => {
+export const WatchlistListing = ({ tickers }: Props) => {
   return (
     <Stack
       direction="row"
@@ -22,8 +21,8 @@ export const WatchlistListing = ({ data, isFetching }: Props) => {
         "& > *": { flexShrink: 0, width: 186 },
       }}
     >
-      {data.map((item) => (
-        <WatchlistItem key={item.ticker} item={item} isFetching={isFetching} />
+      {tickers.map((ticker) => (
+        <WatchlistItem key={ticker} ticker={ticker} />
       ))}
     </Stack>
   );

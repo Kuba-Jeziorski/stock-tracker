@@ -9,6 +9,8 @@ export const FINNHUB_URL_STAT_BASE =
   "https://finnhub.io/api/v1/stock/profile2?symbol=";
 export const FINNHUB_URL_NEWS_BASE =
   "https://finnhub.io/api/v1/company-news?symbol=";
+export const FINNHUB_URL_LOGO_BASE =
+  "https://static2.finnhub.io/file/publicdatany/finnhubimage/stock_logo/";
 
 export const QUOTE_STALE_TIME_MS = 3_600_000;
 export const STAT_STALE_TIME_MS = 86_400_000;

@@ -33,5 +33,6 @@ export const fetchStat = async (
     country: stat.country,
     ipo: stat.ipo,
     marketCapitalization: stat.marketCapitalization,
+    logo: stat.logo,
   };
 };
