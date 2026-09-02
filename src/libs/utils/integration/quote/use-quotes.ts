@@ -1,16 +1,10 @@
 import { useQueries } from "@tanstack/react-query";
-import { QUOTE_STALE_TIME_MS } from "../../../constants/constants";
-import type { StockTicker } from "../../../types/stock";
-import { fetchSettledQuote } from "../../../libs/utils/integration/quote/fetch-settled-quote";
+import type { StockTicker } from "../../../../types/stock";
+import { quoteQueryOptions } from "./quote-query-options";
 
 export const useQuotes = (tickers: StockTicker[]) => {
   const results = useQueries({
-    queries: tickers.map((ticker) => ({
-      queryKey: ["quote", ticker],
-      queryFn: () => fetchSettledQuote(ticker),
-      enabled: Boolean(ticker),
-      staleTime: QUOTE_STALE_TIME_MS,
-    })),
+    queries: tickers.map(quoteQueryOptions),
   });
 
   const quotes = results.flatMap((result) =>

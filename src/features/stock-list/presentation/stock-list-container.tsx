@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Typography } from "@mui/material";
 import { PER_PAGE } from "../core/constants";
-import { useQuotes } from "../integration/use-quotes";
+import { useQuotes } from "../../../libs/utils/integration/quote/use-quotes";
 import { Pagination } from "./pagination";
 import { StockList } from "./stock-list";
 import { useSearchParams } from "react-router";
