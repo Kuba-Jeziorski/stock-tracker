@@ -2,6 +2,8 @@
 
 A web app for browsing a curated list of stocks, viewing live quotes and company details, saving a personal watchlist, and comparing two tickers side by side.
 
+**Live version:** [https://react-stock-tracker.netlify.app/](https://react-stock-tracker.netlify.app/)
+
 **This is an MVP.** The feature set is intentionally limited: a fixed universe of companies, sector-only filtering, a small local watchlist, and market data from a single public API. Expect rough edges, rate-limit constraints, and no authentication or persistence beyond the browser.
 
 ## Features
